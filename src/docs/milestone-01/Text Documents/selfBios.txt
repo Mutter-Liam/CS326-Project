@@ -14,3 +14,4 @@ Adam Smith
 I like the finer things in life, aka visuals. A project with an ugly interface is ugly to its core, no matter what the backend looks like. I like game development, front-end dev, and a dabble of python and sql based backend, and am a swiss army knife with git(hub Desktop). I’m not easy to please, and I’ll bring this attitude to this project. I will restore and invoke stern, hard-nosed, principled programming in everything I touch.
 
 Liam Mutter
+I'm a backend andy. I'm interested in algorithm development and theoretical computer science. I have a bucnh of experience with HTML, CSS, JS as well as some C, Python and some other stuff. I volunteer at a lab which does projects with machine learning on MRI images. I also have done a lot of computational computer science in my physics classes. I'm still pretty new to Git but I have worked on some projects using it during a hackathon so hopefully it will click pretty fast.
