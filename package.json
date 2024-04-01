@@ -1,0 +1,41 @@
+{
+  "name": "",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "license": "AGPL-version-3.0",
+  "private": false,
+  "engines": {
+    "node": ">= 14.0.0",
+    "npm": ">= 6.0.0"
+  },
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": "",
+  "keywords": [],
+  "author": {
+    "name": "TEAMNAME TO GO HERE",
+    "url": "https://github.com/Mutter-Liam/CS326-Project"
+  },
+  "contributors": [
+    "Benjamin Wong, Wong-Benjamin, benwong@umass.edu",
+    "Liam Mutter, Mutter-Liam, lmutter@umass.edu",
+    "Sandro Ansari, ???, alexanderans@umass.edu",
+    "Adam Smith, ???. adajsmith@umass.edu"
+
+  ],
+  "scripts": {
+    "dev": "",
+    "test": ""
+  },
+  "dependencies": {
+
+  },
+  "devDependencies": {
+
+  }
+}
