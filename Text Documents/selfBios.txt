@@ -1,0 +1,16 @@
+
+Mission Statement:
+
+“After reviewing the requirements you are to share with each other your background. In particular, aspects that are relevant to this particular project including programming languages, Git version control, and GitHub, your interests, and what you think you bring to the project that is unique that will contribute towards an effective and successful project.”
+
+
+Benjamin Wong
+Fairly tolerable in languages JS, J, C, or Python. Casually interested in game development, having contributed to the occasional game jam with friends and hobbyish personal projects, but professionally interested in front-end development. Low/moderate level of knowledge in Git, but has hobbyist knowledge of using it and directing a "team" at a Game Jam.
+
+Sandro Ansari
+The late night 6 hour plus programming session getting that one feature working is the single core experience of development, but I appreciate the grind, and with my working knowledge of JS and HTML, am excited to grind out this project with my awesome team. Having dabbled in game development, and computational linguistics research, I have familiarity with larger scale programming projects and am fairly proficient with Git/Github workflows.
+
+Adam Smith
+I like the finer things in life, aka visuals. A project with an ugly interface is ugly to its core, no matter what the backend looks like. I like game development, front-end dev, and a dabble of python and sql based backend, and am a swiss army knife with git(hub Desktop). I’m not easy to please, and I’ll bring this attitude to this project. I will restore and invoke stern, hard-nosed, principled programming in everything I touch.
+
+Liam Mutter
