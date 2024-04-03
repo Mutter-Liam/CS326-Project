@@ -1,3 +1,11 @@
+html{
+    font-family:Georgia, 'Times New Roman', Times, serif
+}
+section{
+    padding-bottom: 60px;
+}
+
+
 .intro-img{
     width: 170px;
     height: 200px;
@@ -33,6 +41,10 @@
 .wireframe-img-container{
     float:left;
 
+}
+
+.main-text-container{
+    font-size: 25px;
 }
 
 
