@@ -18,7 +18,7 @@
   "bugs": "",
   "keywords": [],
   "author": {
-    "name": "TEAMNAME TO GO HERE",
+    "name": "Voltron Squad",
     "url": "https://github.com/Mutter-Liam/CS326-Project"
   },
   "contributors": [
@@ -30,7 +30,9 @@
   ],
   "scripts": {
     "dev": "",
-    "test": ""
+    "test": "",
+    "validate-html": "html-validate src/**/*.html",
+    "prettier": "prettier src —write"
   },
   "dependencies": {
 
