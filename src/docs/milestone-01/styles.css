@@ -4,7 +4,9 @@ html{
 section{
     padding-bottom: 60px;
 }
-
+.body-header{
+    text-align: center;
+}
 
 .intro-img{
     width: 170px;
