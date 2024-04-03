@@ -12,165 +12,176 @@
 <body>
     <header id="vision">
         <!-- Navigation bar, logo, etc. -->
-        <h1>Rendezvous, a quick and way to study and make new friends.</h1>
+        <div id="heading-container">
+            <img width="80px" height="80px" src="images/RendezvousIcon.png">
+            <div id="heading-text-container">
+                <h1>Rendezvous, a quick and way to study and make new friends.</h1>
+            </div>
+        </div>
     </header>
     <nav>
         <!-- Links to different sections/pages -->
         <div id="nav-container">
             <ul>
-                <li><a href="#overview">Overview</a></li>
+                <li id="left-corner"><a href="#overview">Overview</a></li>
                 <li><a href="#application-parts">Application Parts</a></li>
                 <li><a href="#data-requirements">Data Requirements</a></li>
                 <li><a href="#wire-frames">Wireframes</a></li>
                 <li><a href="#real-world">Real World</a></li>
-                <li><a href="#integrative-experience">Integrative experience</a></li>
+                <li id="right-corner"><a href="#integrative-experience">Integrative experience</a></li>
               </ul>
         </div>
-    </nav>  
-    <section id="team">
-        <h2>Intros (Click on the photos for some fun!)</h2>
-        <div class="name"><h3>Ben Wong</h3></div>
-        <div class="intro">
-            <div class="intro-img-container">
-                <img class="intro-img" id="ben" src="images/RetroBenFace.webp">
+    </nav> 
+    <div id="page-padding">
+        <section id="team">
+            <h2 id="first-text">Intros (Click on the photos for some fun!)</h2>
+            <div class="name c1"><h3>Ben Wong</h3></div>
+            <div class="intro c1">
+                <div class="intro-img-container">
+                    <img class="intro-img" id="ben" src="images/RetroBenFace.webp">
+                </div>
+                <div class="intro-text">
+                    Fairly tolerable in languages JS and HTML for the scope of the project. Casually interested in game development, having contributed to the occasional game jam with friends as an informal team leader and hobbyish personal projects, but professionally interested in front-end development. Low/moderate level of knowledge in Git.        
+                </div>
             </div>
-            <div class="intro-text">
-                Fairly tolerable in languages JS and HTML for the scope of the project. Casually interested in game development, having contributed to the occasional game jam with friends as an informal team leader and hobbyish personal projects, but professionally interested in front-end development. Low/moderate level of knowledge in Git.        
+            <div class="name c2"><h3>Sandro Ansari</h3></div>
+            <div class="intro c2">
+                <div class="intro-img-container">
+                    <img class="intro-img" id="sandro" src="images/RetroSandroFace.png">
+                </div>
+                <div class="intro-text">
+                    The late night 6 hour plus programming session getting that one feature working is the single core experience of development, but I appreciate the grind, and with my working knowledge of JS and HTML, am excited to grind out this project with my awesome team. Having dabbled in game development, and computational linguistics research, I have familiarity with larger scale programming projects and am fairly proficient with Git/Github workflows.
+                </div>
             </div>
-        </div>
-        <div class="name"><h3>Sandro Ansari</h3></div>
-        <div class="intro">
-            <div class="intro-img-container">
-                <img class="intro-img" id="sandro" src="images/RetroSandroFace.png">
+            <div class="name c1"><h3>Adam Smith</h3></div>
+            <div class="intro c1">
+                <div class="intro-img-container">
+                    <img class="intro-img" id="adam" src="images/RetroAdamFace.webp">
+                </div>
+                <div class="intro-text">
+                    I like the finer things in life, and there is nothing finer than a good visual. A project with an ugly user interface is ugly to its core, no matter what the backend looks like. I’ve done a good amount of work with game development, front-end dev, and a dabble of python and sql based backend. I am a swiss army knife with git(hub Desktop). I’m not easy to please, and I’ll bring this attitude to this project. I will restore and invoke stern, hard-nosed, principled programming to everything I touch.
+                </div>
             </div>
-            <div class="intro-text">
-                The late night 6 hour plus programming session getting that one feature working is the single core experience of development, but I appreciate the grind, and with my working knowledge of JS and HTML, am excited to grind out this project with my awesome team. Having dabbled in game development, and computational linguistics research, I have familiarity with larger scale programming projects and am fairly proficient with Git/Github workflows.
+            <div class="name c2" id="liam"><h3>Liam Mutter</h3></div>
+            <div class="intro c2">
+                <div class="intro-img-container">
+                    <img class="intro-img" id="liam" src="images/RetroLiamFace.png">
+                </div>
+                <div class="intro-text">
+                    I love the backend work in CS. I'm interested in algorithm development and theoretical computer science. I have a bucnh of experience with HTML, CSS, JS as well as some C, Python and some other stuff. I volunteer at a lab which does projects with machine learning on MRI images. I also have done a lot of computational computer science in my physics classes. I'm still pretty new to Git but I have worked on some projects using it during a hackathon so hopefully it will click pretty fast.
+                </div>
             </div>
-        </div>
-        <div class="name"><h3>Adam Smith</h3></div>
-        <div class="intro">
-            <div class="intro-img-container">
-                <img class="intro-img" id="adam" src="images/RetroAdamFace.webp">
-            </div>
-            <div class="intro-text">
-                I like the finer things in life, and there is nothing finer than a good visual. A project with an ugly user interface is ugly to its core, no matter what the backend looks like. I’ve done a good amount of work with game development, front-end dev, and a dabble of python and sql based backend. I am a swiss army knife with git(hub Desktop). I’m not easy to please, and I’ll bring this attitude to this project. I will restore and invoke stern, hard-nosed, principled programming to everything I touch.
-            </div>
-        </div>
-        <div class="name" id="liam"><h3>Liam Mutter</h3></div>
-        <div class="intro">
-            <div class="intro-img-container">
-                <img class="intro-img" id="liam" src="images/RetroLiamFace.png">
-            </div>
-            <div class="intro-text">
-                I'm love the backend work in CS. I'm interested in algorithm development and theoretical computer science. I have a bucnh of experience with HTML, CSS, JS as well as some C, Python and some other stuff. I volunteer at a lab which does projects with machine learning on MRI images. I also have done a lot of computational computer science in my physics classes. I'm still pretty new to Git but I have worked on some projects using it during a hackathon so hopefully it will click pretty fast.
-            </div>
-        </div>
-    </section>
-
-    <main>
-        <!-- Main content of the document -->
-        <article>
-            <!-- Primary content like a blog post or article -->
-            <section id="overview">
-                <div class="body-header">
-                    <h2>Overview</h2>
-                </div>
-                <div class="main-text-container">
-                    <p>We at Team Voltron, as latter year college students, are familiar with what it's like to enter a class knowing nobody - it's difficult to spend time and energy reaching out to strangers to form a study group, and close to impossible to interact with the people in other class sections. To solve this problem, we intend to design an app / web application focused on allowing the public to share spontaneous / low-overhead meetings, with an initial particular focus on group studying. By holding intuitively easy to use tools, it should be very simple and quick for the layman to host a study session, homework get-together, or exam review, letting fellow students effortlessly and quickly join groups. At first, we will primarily be targeting college students, opening features with spontaneous study group formation / hosting, and specific support for the UMass Amherst area - but as the project goes along we could consider broader uses, such as general use by society at large or official use by organizations.</p>
-                </div>
-            </section>
-            <section id="application-parts">
-                <div class="body-header">
-                    <h2>Application Parts</h2>
-                </div>
-                <div class="main-text-container">
-                    <p>Rendezvous plans to have a content feed of sorts, that is, a list of ongoing / future events happening in the vicinity of the user in a text format for those who want a more conventional view of things happening in their area. To make its contents relevant to the user, users can subscribe to certain topics based on criteria such as a specific class, academic, or nonacademic purposes.</p>
-                    <p>Naturally, you'll also be able to click on these posts for more details, headcounts, a short description, regular occurrences, etc, set by the organizer of the event / question. Users will also be able to publicly reply to one another in the context of the post, either asking for more clarifications or answering whatever question the post poses. Users are encouraged to make legitimate events / answers by way of an account “karma” system, a positive-only reputation system that acts as an easy gauge of how trustworthy or helpful someone is.</p>
-                    <p>An interactive map view stands out as a more interactive, and visual aspect of the app: Rendezvous intends to use real-time GPS data to find and display any gatherings organized nearby with “pins” on a map, physically displaying where meetings are happening along with a brief title / description of what it is. Can be further filtered out much like the content feed, but further with geologically relevant constraints, such as a radius of search or highlighting certain pins based on the meeting's purpose, distance from a bus stop, etc.</p>
-                </div>
-            </section>
-            <section id="data-requirements">
-                <div class="body-header">
-                    <h2>Data Requirements</h2>
-                </div>
-                <div class="main-text-container">
-                    <p>Rendezvous's main goal is to facilitate the communication of information. This is realized in two ways. First and most tangible is the ability to broadcast meeting information to those in a similar situation to you. Second is the notion that these meetings being set up are largely oriented towards studying, working, and learning. This aligns with our goals of fostering knowledge sharing, teamwork, and social-development. This information we are communicating is a lot of data even if we aren't heavily relying on outside established datasets.</p>
-                    <p>Our main method of communication will be through events. These posted events will consist of a time-range, location, and purpose, and they will be attached to a specific board. All of these factors need to be kept track of in order to distribute accurate and useful information to those who may find it relevant. The time-range is extremely important as it controls how long an event remains on a board before being archived. It should also allow us to prioritize showing events with more time remaining on them to users first. The location information is also heavily important as it is the primary connection to the map feature.</p>
-                    <p>The map feature of our website is a huge draw compared to other social platforms including discord, group chats, instagram, etc since you can very easily link the content of a meeting with its location without doing the legwork of having to map it out. You would be able to sort the map pins by board, and thus find places to work on a certain homework or exam review.                    </p>
-                    <p>Events and their connections to maps are all well and good, however if things aren’t clear enough or plans change, something has to be done. Comments are there to fix this. Users will be able to ask clarifying questions about time/location/purpose of an event by commenting on it. This is useful when an intended room is occupied or when something just comes up. This is an added layer of data to associate with each of the events and needs to be managed.                    </p>
-                    <p>Each board will also need to keep track of its events, subscribed users, and any other analytical information. Profiles will need to keep track of subscribed boards and karma and other such statistics as well. Potentially pairing this with google analytics means we can have some interesting administrative dashboards communicating the needs and status of the platform.                    </p>
-                    <p>All told, there is a lot happening through this platform. Communication between users, boards, feeds, events, comments is going to involve a lot of data, but following examples from other social platforms with subscriber models and using what we know about databases should leave us in a good position.</p>
-                </div>
-            </section>
-            <section id="wire-frames">
-                <div class="body-header">
-                    <h2>Wireframe</h2>
-                </div>
-                <div class="wireframe-container">
-                    <div class="wireframe-img-container">
-                        <img class="wireframe-img" src="images/RendezvousWireframe.png">
-                    </div>
-                    <div class="wireframe-text-container">
-                        <p>Main Page (Feed): This first wireframe is of the main layout of our site. It features toggle-able feed and map page (it’s currently selected on feed). Additionally, there are filters to include or weed out certain classes and organizations you may want to see. On the right, we have an interface for users to “broadcast” a new event, where they’ll insert the relevant course, location, ands purpose. </p>
-                    </div>
-                </div>
-                <div class="wireframe-container">
-                    <div class="wireframe-img-container">
-                        <img class="wireframe-img" src="images/RendezvousWireframe2.png">
-                    </div>
-                    <div class="wireframe-text-container">
-                        <p>Main Page (Map): This is the same main page, but with the Map tab currently toggled. This is where broadcasts for events happening across campus with be displayed, with real-time data pertaining to the location, duration, etc. We anticipate making this scrollable, zoomable, and the events to be hoverable                        </p>
-                    </div>
-                </div>
-                <div class="wireframe-container">
-                    <div class="wireframe-img-container">
-                        <img class="wireframe-img" src="images/RendezvousWireframe3.png">
-                    </div>
-                    <div class="wireframe-text-container">
-                        <p> Role Selection: On this page, the user will select their “roles”. This will include classes, clubs, etc that the student would want the ability to see on their feed and map. e</p>
-                    </div>
-                </div>
-                <div class="wireframe-container">
-                    <div class="wireframe-img-container">
-                        <img class="wireframe-img" src="images/RendezvousWireframe4.png">
-                    </div>
-                    <div class="wireframe-text-container">
-                        <p>Settings and Preferences: Here, the user can modify settings pertaining to their account such as notifications, UI, profile picture, as well as their username and displayed data.
-                        </p>
-                    </div>
-                </div>
-            </section>
-            <section id="real-world">
-                <div class="body-header">
-                    <h2>Real World</h2>
-                </div>
-                <div class="main-text-container">
-                    <p>While many college students plan to enroll in classes with friends, establishing a support network ahead of time, we know that this isn’t possible in a lot of cases, such as enrollment-capped classes, mismatched prereqs, or the universal freshman experience of trying to make new friends all over again in a new place away from home. We aim to make this process a bit less painful for students by offering an app that can easily connect other like-minded students in a more casual and friendly environment to foster effective study groups, and in the best case, friends for the rest of their careers at college.</p>
-                </div>
-            </section>
-            <section id="integrative-experience">
-                <div class="body-header">
-                    <h2>Integrative Expierience</h2>
-                </div>
-                <div class="main-text-container">
-                    <p>The motto for UMass’s College of Information and Computer science’s motto “Computing for the greater good.” While we’re not setting out to change the world, when we asked for this project to create an application that addresses a tangible real-world issue, we sought out to address a common issue we all had in common – a “greater good,” that we could all relate to and reasonably address</p>
-                    <p>This brought us to discussing our early years of learning as Computer Science majors.</p>
-                    <p>With the nature of academic honesty and strict confidentiality rules regarding an individual’s code, we found that early years in CS fostered, or at least encouraged an environment where students generally kept to themselves. We at least generally agreed it was difficult, especially in our early years, to form study groups, or even make friends in our CS classes compared to gen eds. </p>
-                    <p>This became apparent in retrospect, in classes with group projects such as CS220, in labs, and even to this class (CS326) to some extent, where students were definitely technically skilled, but suffered in the exchange of ideas and communication.</p>
-                    <p>To address this, we decided to turn that environment on its head – using the lessons we’ve learned from it, we’d like to put together an application to address that problem and break down this barrier, encouraging students to more freely talk with one another, gaining interpersonal skills and friendships in the process.</p>
-                </div>
-            </section>
-        </article>
-
-        <section >
-            <!-- Related content or subsections -->
         </section>
+        <div class="sep"></div>
+        <main>
+            <!-- Main content of the document -->
+            <article>
+                <!-- Primary content like a blog post or article -->
+                <section id="overview">
+                    <div class="body-header">
+                        <h2>Overview</h2>
+                    </div>
+                    <div class="main-text-container">
+                        <p>We at Team Voltron, as latter year college students, are familiar with what it's like to enter a class knowing nobody - it's difficult to spend time and energy reaching out to strangers to form a study group, and close to impossible to interact with the people in other class sections. To solve this problem, we intend to design an app / web application focused on allowing the public to share spontaneous / low-overhead meetings, with an initial particular focus on group studying. By holding intuitively easy to use tools, it should be very simple and quick for the layman to host a study session, homework get-together, or exam review, letting fellow students effortlessly and quickly join groups. At first, we will primarily be targeting college students, opening features with spontaneous study group formation / hosting, and specific support for the UMass Amherst area - but as the project goes along we could consider broader uses, such as general use by society at large or official use by organizations.</p>
+                    </div>
+                </section>
+                <div class="sep"></div>
+                <section id="application-parts">
+                    <div class="body-header">
+                        <h2>Application Parts</h2>
+                    </div>
+                    <div class="main-text-container">
+                        <p>Rendezvous plans to have a content feed of sorts, that is, a list of ongoing / future events happening in the vicinity of the user in a text format for those who want a more conventional view of things happening in their area. To make its contents relevant to the user, users can subscribe to certain topics based on criteria such as a specific class, academic, or nonacademic purposes.</p>
+                        <p>Naturally, you'll also be able to click on these posts for more details, headcounts, a short description, regular occurrences, etc, set by the organizer of the event / question. Users will also be able to publicly reply to one another in the context of the post, either asking for more clarifications or answering whatever question the post poses. Users are encouraged to make legitimate events / answers by way of an account “karma” system, a positive-only reputation system that acts as an easy gauge of how trustworthy or helpful someone is.</p>
+                        <p>An interactive map view stands out as a more interactive, and visual aspect of the app: Rendezvous intends to use real-time GPS data to find and display any gatherings organized nearby with “pins” on a map, physically displaying where meetings are happening along with a brief title / description of what it is. Can be further filtered out much like the content feed, but further with geologically relevant constraints, such as a radius of search or highlighting certain pins based on the meeting's purpose, distance from a bus stop, etc.</p>
+                    </div>
+                </section>
+                <div class="sep"></div>
+                <section id="data-requirements">
+                    <div class="body-header">
+                        <h2>Data Requirements</h2>
+                    </div>
+                    <div class="main-text-container">
+                        <p>Rendezvous's main goal is to facilitate the communication of information. This is realized in two ways. First and most tangible is the ability to broadcast meeting information to those in a similar situation to you. Second is the notion that these meetings being set up are largely oriented towards studying, working, and learning. This aligns with our goals of fostering knowledge sharing, teamwork, and social-development. This information we are communicating is a lot of data even if we aren't heavily relying on outside established datasets.</p>
+                        <p>Our main method of communication will be through events. These posted events will consist of a time-range, location, and purpose, and they will be attached to a specific board. All of these factors need to be kept track of in order to distribute accurate and useful information to those who may find it relevant. The time-range is extremely important as it controls how long an event remains on a board before being archived. It should also allow us to prioritize showing events with more time remaining on them to users first. The location information is also heavily important as it is the primary connection to the map feature.</p>
+                        <p>The map feature of our website is a huge draw compared to other social platforms including discord, group chats, instagram, etc since you can very easily link the content of a meeting with its location without doing the legwork of having to map it out. You would be able to sort the map pins by board, and thus find places to work on a certain homework or exam review.                    </p>
+                        <p>Events and their connections to maps are all well and good, however if things aren’t clear enough or plans change, something has to be done. Comments are there to fix this. Users will be able to ask clarifying questions about time/location/purpose of an event by commenting on it. This is useful when an intended room is occupied or when something just comes up. This is an added layer of data to associate with each of the events and needs to be managed.                    </p>
+                        <p>Each board will also need to keep track of its events, subscribed users, and any other analytical information. Profiles will need to keep track of subscribed boards and karma and other such statistics as well. Potentially pairing this with google analytics means we can have some interesting administrative dashboards communicating the needs and status of the platform.                    </p>
+                        <p>All told, there is a lot happening through this platform. Communication between users, boards, feeds, events, comments is going to involve a lot of data, but following examples from other social platforms with subscriber models and using what we know about databases should leave us in a good position.</p>
+                    </div>
+                </section>
+                <div class="sep"></div>
+                <section id="wire-frames">
+                    <div class="body-header">
+                        <h2>Wireframe</h2>
+                    </div>
+                    <div class="wireframe-container">
+                        <div class="wireframe-img-container">
+                            <img class="wireframe-img" src="images/RendezvousWireframe.png">
+                        </div>
+                        <div class="wireframe-text-container">
+                            <p>Main Page (Feed): This first wireframe is of the main layout of our site. It features toggle-able feed and map page (it’s currently selected on feed). Additionally, there are filters to include or weed out certain classes and organizations you may want to see. On the right, we have an interface for users to “broadcast” a new event, where they’ll insert the relevant course, location, ands purpose. </p>
+                        </div>
+                    </div>
+                    <div class="wireframe-container">
+                        <div class="wireframe-img-container">
+                            <img class="wireframe-img" src="images/RendezvousWireframe2.png">
+                        </div>
+                        <div class="wireframe-text-container">
+                            <p>Main Page (Map): This is the same main page, but with the Map tab currently toggled. This is where broadcasts for events happening across campus with be displayed, with real-time data pertaining to the location, duration, etc. We anticipate making this scrollable, zoomable, and the events to be hoverable                        </p>
+                        </div>
+                    </div>
+                    <div class="wireframe-container">
+                        <div class="wireframe-img-container">
+                            <img class="wireframe-img" src="images/RendezvousWireframe3.png">
+                        </div>
+                        <div class="wireframe-text-container">
+                            <p> Role Selection: On this page, the user will select their “roles”. This will include classes, clubs, etc that the student would want the ability to see on their feed and map. e</p>
+                        </div>
+                    </div>
+                    <div class="wireframe-container">
+                        <div class="wireframe-img-container">
+                            <img class="wireframe-img" src="images/RendezvousWireframe4.png">
+                        </div>
+                        <div class="wireframe-text-container">
+                            <p>Settings and Preferences: Here, the user can modify settings pertaining to their account such as notifications, UI, profile picture, as well as their username and displayed data.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <div class="sep"></div>
+                <section id="real-world">
+                    <div class="body-header">
+                        <h2>Real World</h2>
+                    </div>
+                    <div class="main-text-container">
+                        <p>While many college students plan to enroll in classes with friends, establishing a support network ahead of time, we know that this isn’t possible in a lot of cases, such as enrollment-capped classes, mismatched prereqs, or the universal freshman experience of trying to make new friends all over again in a new place away from home. We aim to make this process a bit less painful for students by offering an app that can easily connect other like-minded students in a more casual and friendly environment to foster effective study groups, and in the best case, friends for the rest of their careers at college.</p>
+                    </div>
+                </section>
+                <div class="sep"></div>
+                <section id="integrative-experience">
+                    <div class="body-header">
+                        <h2>Integrative Expierience</h2>
+                    </div>
+                    <div class="main-text-container">
+                        <p>The motto for UMass’s College of Information and Computer science’s motto “Computing for the greater good.” While we’re not setting out to change the world, when we asked for this project to create an application that addresses a tangible real-world issue, we sought out to address a common issue we all had in common – a “greater good,” that we could all relate to and reasonably address</p>
+                        <p>This brought us to discussing our early years of learning as Computer Science majors.</p>
+                        <p>With the nature of academic honesty and strict confidentiality rules regarding an individual’s code, we found that early years in CS fostered, or at least encouraged an environment where students generally kept to themselves. We at least generally agreed it was difficult, especially in our early years, to form study groups, or even make friends in our CS classes compared to gen eds. </p>
+                        <p>This became apparent in retrospect, in classes with group projects such as CS220, in labs, and even to this class (CS326) to some extent, where students were definitely technically skilled, but suffered in the exchange of ideas and communication.</p>
+                        <p>To address this, we decided to turn that environment on its head – using the lessons we’ve learned from it, we’d like to put together an application to address that problem and break down this barrier, encouraging students to more freely talk with one another, gaining interpersonal skills and friendships in the process.</p>
+                    </div>
+                </section>
+            </article>
 
-        <aside>
-            <!-- Side content like ads, links to other posts, or author info -->
-        </aside>
-    </main>
+            <section >
+                <!-- Related content or subsections -->
+            </section>
 
+            <aside>
+                <!-- Side content like ads, links to other posts, or author info -->
+            </aside>
+        </main>
+    </div>  
     <footer>
         <!-- Footer content like copyright, links to privacy policy, etc. -->
     </footer>
