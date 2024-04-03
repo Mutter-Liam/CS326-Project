@@ -2,3 +2,14 @@
     width: 170px;
     height: 200px;
 }
+.intro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 7%;
+}
+.intro-text {
+    font-size: 20px;
+    float: left;
+    align-items: center;
+}
