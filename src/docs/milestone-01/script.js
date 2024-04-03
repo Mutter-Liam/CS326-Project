@@ -14,7 +14,7 @@ for (let img of imgs){
             img.src = (retro) ? "images/AdamFace.jpeg" : "images/RetroAdamFace.webp"
         }
         else if (id === "sandro"){
-            img.src = (retro) ? "images/SandroFace.jpeg" : "images/RetroSandroFace.png"
+            img.src = (retro) ? "images/SandroFace.png" : "images/RetroSandroFace.png"
         }
         retro = !retro
     }
