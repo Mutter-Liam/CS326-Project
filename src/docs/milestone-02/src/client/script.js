@@ -1,3 +1,10 @@
+
+//      -------------------------
+//         DATA REPRESENTATION
+//               MOCK UP
+//      -------------------------
+
+
 class Profile {
     constructor(name, karma, email) {
       this.name = name; // String: Name of the user

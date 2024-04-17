@@ -26,13 +26,3 @@ body{
     margin: 5px;
     padding: 2px;
 }
-
-#header-panel {
-    flex-grow: .075;
-}
-#filter-panel {
-}
-#center-panel {
-}
-#add-panel {
-}
