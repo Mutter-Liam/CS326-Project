@@ -10,15 +10,17 @@
     <script type="module" src="script.js" defer></script>
 </head>
 <body>
-    <script>document.write("HEADER BAR")</script>
+    <div class="panel" id="header-panel">
+        <script>document.write("HEADER BAR")</script>
+    </div>
     <div class="grid-container">
-        <div class="grid-item">
+        <div class="panel" class="grid-item" id="filter-panel">
             <script>document.write("FILTER TAB")</script>
         </div>
-        <div class="grid-item">
+        <div class="panel" class="grid-item" id="center-panel">
             <script>document.write("FEED/MAP/BOARDS")</script>
         </div>
-        <div class="grid-item">
+        <div class="panel" class="grid-item" id="add-panel">
             <script>document.write("CREATE/PUBLISH")</script>
         </div>
     </div>
