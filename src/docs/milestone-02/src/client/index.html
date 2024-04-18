@@ -8,16 +8,20 @@
     <link rel="stylesheet" href="styles.css">
     <!-- JavaScript Files -->
     <script type="module" src="script.js" defer></script>
-    <script src="https://www.w3schools.com/lib/w3.js"></script>
 </head>
 <body>
-    <div class="panel" style="flex-grow: .075" w3-include-html="pageComponents/headerBar.html"></div>
-    <div class="grid-container">
-        <div class="panel" class="grid-item" w3-include-html="pageComponents/filterTab.html"></div>
-        <div class="panel" class="grid-item" w3-include-html="pageComponents/feed.html"></div>
-        <div class="panel" class="grid-item" w3-include-html="pageComponents/createEvent.html"></div>
+    <div class="panel" style="flex-grow: .075" id="headerBar"></div>
+    <div class="panelsContainer">
+        <div class="panel" class="grid-item" id="boardList"></div>
+        <div class="panel" class="grid-item">
+            <div id="feedGrid"></div>
+            <div id="boardGrid"></div>
+            <div id="map"></div>
+        </div>
+        <div class="panel" class="grid-item">
+            <div id="eventCreate"></div>
+            <div id="boardCreate"></div>
+        </div>
     </div>
-    <!-- Insert the html component sections -->
-    <script>w3.includeHTML();</script>
 </body>
 </html>

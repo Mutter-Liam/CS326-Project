@@ -14,7 +14,7 @@ body{
     flex-direction: column;
 }
 
-.grid-container {
+.panelsContainer {
     display: grid;
     grid-template-columns: 15% auto 25%;
     flex-grow: 1;
@@ -26,3 +26,22 @@ body{
     margin: 5px;
     padding: 2px;
 }
+
+#feedGrid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.feedPost {
+    background-color: aquamarine;
+    padding: 5px;
+    margin: 10px;
+    border: solid;
+}
+
+#boardGrid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+/* #map {} */
