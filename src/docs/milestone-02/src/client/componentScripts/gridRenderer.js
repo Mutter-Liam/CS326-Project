@@ -10,8 +10,7 @@ export function renderFeedGrid(element) {
         display: grid;\
         grid-template-columns: 33.33% 33.33% 33.33%;\
         ";
-    element.innerHTML = "";
-    if (!feedColumnsCreated) createFeedGridColumns(element);
+    createFeedGridColumns(element);
     const subscribedEvents = wrappedDB.getCurrentUser().subscribedBoards.map(boardID=>wrappedDB.getBoardEvents(boardID))[0];
     for (let event in subscribedEvents) {
         const minHeightDiv = feedColumns.reduce((acc, e)=>e.height < acc.height ? e : acc, feedColumns[0]);
@@ -25,8 +24,7 @@ export function renderBoardGrid(element) {
         display: grid;\
         grid-template-columns: 33.33% 33.33% 33.33%;\
         ";
-    element.innerHTML = "";
-    if (!boardColumnsCreated) createBoardGridColumns(element);
+    createBoardGridColumns(element);
     const boards = wrappedDB.boards.boards;
     for (let board in boards) {
         const minHeightDiv = boardColumns.reduce((acc, e)=>e.height < acc.height ? e : acc, boardColumns[0]);
@@ -57,6 +55,7 @@ function createBoardDiv(board) {
 }
 
 function createFeedGridColumns(element) {
+    feedColumns = [];
     for (let x = 0; x < 3; x++) {
         const newDiv = document.createElement("div");
         newDiv.classList.add("feedGridColumn");
@@ -72,6 +71,7 @@ function createFeedGridColumns(element) {
 }
 
 function createBoardGridColumns(element) {
+    boardColumns = [];
     for (let x = 0; x < 3; x++) {
         const newDiv = document.createElement("div");
         newDiv.classList.add("boardGridColumn");
