@@ -1,8 +1,9 @@
 import { renderHeaderBar } from "./componentScripts/headerBar.js";
-import { renderBoardGrid } from "./componentScripts/boardGrid.js";
+import { renderFeedGrid, renderBoardGrid } from "./componentScripts/gridRenderer.js";
 import { renderEventCreate } from "./componentScripts/eventCreate.js";
 import { renderBoardCreate } from "./componentScripts/boardCreate.js";
 import { renderBoardList } from "./componentScripts/boardList.js";
+import { renderMap } from "./componentScripts/map.js";
 
 
 // use these elements that correspond with the 4 major boxes in our display panels
@@ -14,35 +15,33 @@ const rightDisplayBoxElement = document.getElementById("rightDisplayBox");
 // the one universal render call: the header
 renderHeaderBar(headerBarElement);
 
-// FOR DEBUGGING BEFORE ADDING TRANSITION BUTTONS: 
-// JUST UNCOMMENT THE ITEMS UNDER THE WIREFRAME YOU WANT TO LOOK AT. 
+// FOR DEBUGGING BEFORE ADDING TRANSITION BUTTONS:
 
-// Render calls for wireframe01
-/*
-    ADD FEED RENDERS HERE
-    exampleRender(leftDisplayBoxElement);
-    exampleRender(middleDisplayBoxElement);
-    exampleRender(rightDisplayBoxElement);
-*/
-
-
-// Render calls for wireframe02
-/*
-    ADD MAP RENDERS HERE
-    exampleRender(leftDisplayBoxElement);
-    exampleRender(middleDisplayBoxElement);
-    exampleRender(rightDisplayBoxElement);
-*/
-
-// Render calls for wireframe03
-/*
-    renderBoardList(leftDisplayBoxElement, true);
-    renderBoardGrid(middleDisplayBoxElement);
-    renderBoardCreate(rightDisplayBoxElement);
-*/
-
-
-// Render calls for wireframe 04
-/*
-    ADD SETTINGS RENDERING HERE(?)
-*/
+window.changeView = (view) => {
+    [leftDisplayBoxElement, middleDisplayBoxElement, rightDisplayBoxElement].forEach(x=>x.innerHTML="");
+    switch (view) {
+        case 1: // FEED VIEW
+            console.log("Rendering Feed View.");
+            renderBoardList(leftDisplayBoxElement, false);
+            renderFeedGrid(middleDisplayBoxElement);
+            renderEventCreate(rightDisplayBoxElement);
+            break;
+        case 2: // MAP VIEW
+        console.log("Rendering Map View.");
+            renderBoardList(leftDisplayBoxElement);
+            renderMap(middleDisplayBoxElement);
+            renderEventCreate(rightDisplayBoxElement);
+            break;
+        case 3: //BOARD VIEW
+        console.log("Rendering Board View.");
+            renderBoardList(leftDisplayBoxElement, true);
+            renderBoardGrid(middleDisplayBoxElement);
+            renderBoardCreate(rightDisplayBoxElement);
+            break;
+        case 4: //SETTINGS VIEW
+            console.log("Rendering Settings View.");
+            //REPLACE WITH RENDER CALLS
+            break;
+    }
+    return true;
+}
