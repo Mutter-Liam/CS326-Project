@@ -13,41 +13,22 @@ export function renderBoardGrid(element) {
 }
 
 
-//TODO Incorporate searchbar(s).
-
 function searchBars(element) {
-    // Create a form element
-    const form = document.createElement("form");
-
-    // Create form elements
-    // create search input box
-    // will search for boards by name
-    const nameLabel = document.createElement("label");
-    nameLabel.textContent = "Name: ";
-    const nameInput = document.createElement("input");
-    nameInput.type = "text";
-    nameInput.id = "nameInput";
-
-    // create search button
-    const searchButton = document.createElement("button");
-    searchButton.textContent = "Search!";
-    searchButton.type = "button";
-
-    // create type input box
-    const typeLabel = document.createElement("label");
-    typeLabel.textContent = "Type: ";
-    const typeInput = document.createElement("input");
-    typeInput.type = "text";
-    typeInput.id = "typeInput";
 
 
-    form.appendChild(nameLabel);
-    form.appendChild(nameInput);
-    form.appendChild(searchButton);
-    form.appendChild(typeLabel);
-    form.appendChild(typeInput);
+    element.innerHTML = `
+    <form>
+        <label for="nameInput">Name:</label>
+        <input type="text" id="boardSearchNameInput">
 
-    element.appendChild(form);
+        <label for="typeInput">Type:</label>
+        <input type="text" id="boardSearchTypeInput">
+
+        <button type="button" id="boardSearchButton">Search!</button>
+    </form>
+    `;
+
+    let searchButton = document.getElementById("boardSearchButton");
 
     searchButton.addEventListener("click", function () {
         alert('Whiskey Tango Foxtrot');

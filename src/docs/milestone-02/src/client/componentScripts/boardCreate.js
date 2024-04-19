@@ -10,49 +10,27 @@ export function renderBoardCreate(element) {
 }
 
 function initForm(element) {
-    // Locate the #boardCreate div
-    const boardCreateDiv = element
 
-    // Create a form element
-    const form = document.createElement("form");
+    // inject all of our search bars and buttons to the element
+    element.innerHTML = `
+    <form>
+        <label for="nameInput">Name:</label>
+        <input type="text" id="boardCreateNameInput">
 
-    // Create form elements
-    // create Name input box
-    const nameLabel = document.createElement("label");
-    nameLabel.textContent = "Name:";
-    const nameInput = document.createElement("input");
-    nameInput.type = "text";
-    nameInput.id = "nameInput";
+        <label for="typeInput">Type:</label>
+        <input type="text" id="boardCreateTypeInput">
 
-    // create type input box
-    const typeLabel = document.createElement("label");
-    typeLabel.textContent = "Type:";
-    const typeInput = document.createElement("input");
-    typeInput.type = "text";
-    typeInput.id = "typeInput";
+        <label for="descriptionInput">Description:</label>
+        <input type="text" id="boardCreateDescriptionInput">
 
-    // create description input box
-    const descriptionLabel = document.createElement("label");
-    descriptionLabel.textContent = "Description:";
-    const descriptionInput = document.createElement("input");
-    descriptionInput.type = "text";
-    descriptionInput.id = "descriptionInput";
+        <button type="button" id="boardPublishButton">Publish</button>
+    </form>
+    `;
 
-    const publishButton = document.createElement("button");
-    publishButton.textContent = "Publish";
-    publishButton.type = "button";
-
-    // Append all elements to the form
-    form.appendChild(nameLabel);
-    form.appendChild(nameInput);
-    form.appendChild(typeLabel);
-    form.appendChild(typeInput);
-    form.appendChild(descriptionLabel);
-    form.appendChild(descriptionInput);
-    form.appendChild(publishButton);
-
-    // Append the form to the element
-    boardCreateDiv.appendChild(form);
+    const publishButton = document.getElementById("boardPublishButton");
+    const nameInput = document.getElementById("boardCreateNameInput");
+    const typeInput = document.getElementById("boardCreateTypeInput");
+    const descriptionInput = document.getElementById("boardCreateDescriptionInput");
 
     // Add event listener for the publish button
     publishButton.addEventListener("click", function () {

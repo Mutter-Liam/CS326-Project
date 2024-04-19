@@ -13,5 +13,5 @@ const boardCreateElement = document.getElementById("boardCreate");
 renderHeaderBar(headerBarElement);
 renderBoardGrid(boardGridElement);
 //renderFeed(feedGridElement);
-renderEventCreate(createEventElement);
+//renderEventCreate(createEventElement);
 renderBoardCreate(boardCreateElement);
