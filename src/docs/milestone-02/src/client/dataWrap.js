@@ -142,8 +142,10 @@ wrappedDB.users.addUser("Keith", "keith@voltron.org");
 wrappedDB.users.addUser("Pidge", "pidge@voltron.org");
 
 wrappedDB.boards.addBoard("Universal Threats", "Physical Activity","Robeasts that need fighting");
+wrappedDB.boards.addBoard("Universal Threats", "Physical Activity","Robeasts that need fighting");
 
 wrappedDB.subscribeUserToBoard(0,0);
+wrappedDB.subscribeUserToBoard(0,1);
 wrappedDB.subscribeUserToBoard(1,0);
 
 wrappedDB.createNewEvent(0,"Goose Monster on the Loose","Dangerous activity near campus pond.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",0);
