@@ -1,4 +1,4 @@
-// code for the rightHand side of wireframe 3.
+// code for the rightHandDisplayBox of wireframe 3.
 import { wrappedDB } from "../dataWrap.js";
 
 
@@ -6,6 +6,7 @@ export function renderBoardCreate(element) {
     // clear the content of the element. 
     element.innerHTML = "";
 
+    // init the form into the element.
     initForm(element);
 }
 
@@ -27,6 +28,7 @@ function initForm(element) {
     </form>
     `;
 
+    // formally recognize our input boxes and the publish button
     const publishButton = document.getElementById("boardPublishButton");
     const nameInput = document.getElementById("boardCreateNameInput");
     const typeInput = document.getElementById("boardCreateTypeInput");
@@ -39,6 +41,7 @@ function initForm(element) {
             alert("one of the boxes are empty lol");
         }
         else{
+            // else create a new board and inform user 
             wrappedDB.createNewBoard(nameInput.value, typeInput.value, descriptionInput.value);
             alert("Board created successfully!");
         }

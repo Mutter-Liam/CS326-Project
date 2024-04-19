@@ -1,4 +1,4 @@
-// code list for the central part of wireframe 3.
+// code for the central box of wireframe 3.
 
 // render the board list
 export function renderBoardGrid(element) {
@@ -8,14 +8,15 @@ export function renderBoardGrid(element) {
     // first put in our searchbars
     searchBars(element);
 
-    // invoke some boards without any specification
+    // display boards
+    // Assuming this is going to you, Sandro
 
 }
 
 
 function searchBars(element) {
 
-
+    // inject all of our boxes into the specified element
     element.innerHTML = `
     <form>
         <label for="nameInput">Name:</label>
@@ -28,8 +29,11 @@ function searchBars(element) {
     </form>
     `;
 
+    // formally recognize our searchButton
     let searchButton = document.getElementById("boardSearchButton");
 
+    // Add event listener to searchButton
+    // TODO: make it search for real. 
     searchButton.addEventListener("click", function () {
         alert('Whiskey Tango Foxtrot');
     });
