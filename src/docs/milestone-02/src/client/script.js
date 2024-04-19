@@ -12,7 +12,7 @@ const createEventElement = document.getElementById("eventCreate");
 let feedView = false; //Toggles board grid and feed grid
 
 renderHeaderBar(headerBarElement);
-renderBoardList(boardListElement);
+renderBoardList(boardListElement, true);
 if (feedView) renderFeedGrid(feedGridElement);
 else renderBoardGrid(boardGridElement)
 renderEventCreate(createEventElement);
