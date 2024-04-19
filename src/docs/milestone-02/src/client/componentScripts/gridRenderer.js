@@ -8,7 +8,7 @@ let boardColumns = [];
 export function renderFeedGrid(element) {
     element.innerHTML = "";
     if (!feedColumnsCreated) createFeedGridColumns(element);
-    const subscribedEvents = wrappedDB.getCurrentUser().subscribedBoards.map(boardID=>wrappedDB.getBoardEvents(boardID))[0];
+    const subscribedEvents = wrappedDB.getCurrentUser().subscribedBoards.filter(x=>x).map(boardID=>wrappedDB.getBoardEvents(boardID))[0];
     for (let event in subscribedEvents) {
         const minHeightDiv = feedColumns.reduce((acc, e)=>e.height < acc.height ? e : acc, feedColumns[0]);
         const newPost = createPostDiv(subscribedEvents[event]);
