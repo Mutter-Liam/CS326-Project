@@ -5,7 +5,7 @@ export function renderBoardList(boardListElement, inBoardView) {
     console.log(userId)
     const boards = wrappedDB.getUserBoards(userId)
     console.log(boards)
-    const boardList = document.getElementById("boardList");
+    const boardList = document.getElementById("leftDisplayBox");
     boards.forEach(board => {
         const listDiv = createListDiv(board);
         const button = inBoardView ? createRemoveBox() : createCheckBox();

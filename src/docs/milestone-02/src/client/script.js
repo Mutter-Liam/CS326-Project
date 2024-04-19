@@ -2,7 +2,7 @@ import { renderHeaderBar } from "./componentScripts/headerBar.js";
 import { renderBoardGrid } from "./componentScripts/boardGrid.js";
 import { renderEventCreate } from "./componentScripts/eventCreate.js";
 import { renderBoardCreate } from "./componentScripts/boardCreate.js";
-import { renderMyBoardlist } from "./componentScripts/boardList.js";
+import { renderBoardList } from "./componentScripts/boardList.js";
 
 
 // use these elements that correspond with the 4 major boxes in our display panels
@@ -36,7 +36,7 @@ renderHeaderBar(headerBarElement);
 
 // Render calls for wireframe03
 /*
-    renderMyBoardlist(leftDisplayBoxElement);
+    renderBoardList(leftDisplayBoxElement, true);
     renderBoardGrid(middleDisplayBoxElement);
     renderBoardCreate(rightDisplayBoxElement);
 */
