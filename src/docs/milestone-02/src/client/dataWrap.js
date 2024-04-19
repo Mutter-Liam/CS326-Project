@@ -136,6 +136,7 @@ export const wrappedDB = DataWrap.dataWrap();
 
 wrappedDB.users.addUser("Keith", "keith@voltron.org");
 wrappedDB.users.addUser("Pidge", "pidge@voltron.org");
+
 wrappedDB.boards.addBoard("Universal Threats", "Physical Activity","Robeasts that need fighting");
 
 wrappedDB.subscribeUserToBoard(0,0);
