@@ -97,6 +97,10 @@ export class DataWrap {static #instance = null;
         this.getUser(userID).eventsCreated.push(newEventID);
         this.getBoard(boardID).events.push(newEventID);
     }
+    
+    createNewBoard(name, type, description){
+        const newEvent = this.boards.addBoard(name, type, description);
+    }
 
     // ---- User based functions ----
     getUser(id) {
