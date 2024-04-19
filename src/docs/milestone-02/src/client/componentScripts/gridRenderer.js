@@ -21,7 +21,7 @@ export function renderBoardGrid(element) {
     if (!boardColumnsCreated) createBoardGridColumns(element);
     const boards = wrappedDB.boards.boards;
     for (let board in boards) {
-        const minHeightDiv = boardColumns.reduce((acc, e)=>e.height < acc.height ? e : acc, feedColumns[0]);
+        const minHeightDiv = boardColumns.reduce((acc, e)=>e.height < acc.height ? e : acc, boardColumns[0]);
         const newPost = createBoardDiv(boards[board]);
         minHeightDiv.element.appendChild(newPost.div);
         minHeightDiv.height += newPost.height;
@@ -70,7 +70,7 @@ function createBoardGridColumns(element) {
         newDiv.style.flex = true;
         newDiv.style.flexDirection = "column";
         element.appendChild(newDiv);
-        feedColumns.push({
+        boardColumns.push({
             element: newDiv,
             height: 0
         });
