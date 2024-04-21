@@ -1,3 +1,5 @@
+// LEGACY CODE: THIS WAS ORIGINALLY INTENDED FOR THE ENTIRETY OF WIREFRAME 03'S MIDDLE CONTENT BUT THE WRITER (BEN) IS SILLY.
+// CONTAINS OLD CODE FOR SEARCH SCAFFOLDING. 
 // code for the central box of wireframe 3.
 
 // render the board list
@@ -8,9 +10,6 @@ export function renderBoardGrid(element) {
     // first put in our searchbars
     searchBars(element);
 
-    // display boards
-    // Assuming this is going to you, Sandro
-
 }
 
 
@@ -19,13 +18,25 @@ function searchBars(element) {
     // inject all of our boxes into the specified element
     element.innerHTML = `
     <form>
-        <label for="nameInput">Name:</label>
-        <input type="text" id="boardSearchNameInput">
 
-        <label for="typeInput">Type:</label>
-        <input type="text" id="boardSearchTypeInput">
+        <div>
+            <label for="boardSearchNameInput">Name:</label>
+        </div>
+        <div>
+            <input type="text" id="boardSearchNameInput">
+        </div><br>
+        
+        
+        <div>
+            <label for="boardSearchTypeInput">Type:</label>
+        </div>
+        <div>
+            <input type="text" id="boardSearchTypeInput">
+        </div> <br>
 
-        <button type="button" id="boardSearchButton">Search!</button>
+        <div>
+            <button type="button" id="boardSearchButton">Search!</button>
+        </div>
     </form>
     `;
 

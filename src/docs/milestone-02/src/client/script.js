@@ -4,6 +4,7 @@ import { renderEventCreate } from "./componentScripts/eventCreate.js";
 import { renderBoardCreate } from "./componentScripts/boardCreate.js";
 import { renderBoardList } from "./componentScripts/boardList.js";
 import { renderMap } from "./componentScripts/map.js";
+import { renderSettings } from "./componentScripts/settingsDisplay.js";
 
 
 // use these elements that correspond with the 4 major boxes in our display panels
@@ -41,6 +42,7 @@ window.changeView = (view) => {
         case 4: //SETTINGS VIEW
             console.log("Rendering Settings View.");
             //REPLACE WITH RENDER CALLS
+            renderSettings(middleDisplayBoxElement);
             break;
     }
     return true;

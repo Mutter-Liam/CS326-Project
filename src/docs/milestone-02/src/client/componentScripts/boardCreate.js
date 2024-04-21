@@ -14,19 +14,38 @@ function initForm(element) {
 
     // inject all of our search bars and buttons to the element
     element.innerHTML = `
+    <h2>
+            Create a Board!
+        </h2>
     <form>
-        <label for="nameInput">Name:</label>
-        <input type="text" id="boardCreateNameInput">
+        <div>
+            <label for="boardCreateNameInput">Name:</label>
+        </div>
+        <div>
+            <input type="text" id="boardCreateNameInput">
+        </div><br>
+        
+        <div>
+            <label for="boardCreateTypeInput">Type:</label>
+        </div>
+        <div>
+            <input type="text" id="boardCreateTypeInput">
+        </div><br>
 
-        <label for="typeInput">Type:</label>
-        <input type="text" id="boardCreateTypeInput">
-
-        <label for="descriptionInput">Description:</label>
-        <input type="text" id="boardCreateDescriptionInput">
-
-        <button type="button" id="boardPublishButton">Publish</button>
+        <div>
+            <label for="boardCreateDescriptionInput">Description:</label>
+        </div>
+        <div>
+            <textarea id="boardCreateDescriptionInput" type = text name="dboardCreateDescriptionInput" rows="4" cols="20"></textarea>
+        </div><br>
+        
+        <div>
+            <button type="button" id="boardPublishButton">Publish!</button>
+        </div>
+        
     </form>
     `;
+    
 
     // formally recognize our input boxes and the publish button
     const publishButton = document.getElementById("boardPublishButton");
