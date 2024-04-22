@@ -10,7 +10,8 @@ export function renderFeedGrid(element, filterFunc=()=>true) {
     element.style = "\
         display: grid;\
         grid-template-columns: 33.33% 33.33% 33.33%;\
-        ";
+        overflow-y: scroll;\
+        max-height:80%;";
     createFeedGridColumns(element);
     const subscribedBoards = wrappedDB.getCurrentUser().subscribedBoards.filter(filterFunc)
     const subscribedEvents = subscribedBoards.map(boardID=>wrappedDB.getBoardEvents(boardID)).flat();
