@@ -5,13 +5,14 @@ let boardColumnsCreated = false;
 let feedColumns = [];
 let boardColumns = [];
 
-export function renderFeedGrid(element) {
+export function renderFeedGrid(element, filterFunc=()=>true) {
     element.style = "\
         display: grid;\
         grid-template-columns: 33.33% 33.33% 33.33%;\
         ";
     createFeedGridColumns(element);
-    const subscribedEvents = wrappedDB.getCurrentUser().subscribedBoards.map(boardID=>wrappedDB.getBoardEvents(boardID))[0];
+    let subscribedEvents = wrappedDB.getCurrentUser().subscribedBoards.filter(filterFunc)
+    subscribedEvents = wrappedDB.getCurrentUser().subscribedBoards.map(boardID=>wrappedDB.getBoardEvents(boardID))[0];
     for (let event in subscribedEvents) {
         const minHeightDiv = feedColumns.reduce((acc, e)=>e.height < acc.height ? e : acc, feedColumns[0]);
         const newPost = createPostDiv(subscribedEvents[event]);
