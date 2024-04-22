@@ -163,5 +163,5 @@ wrappedDB.createNewEvent(0,"Goose Monster3 on the Loose","Do not approach.",new 
 wrappedDB.createNewEvent(0,"Moose","Dangerous activity near campus pond. Beware of antlers, and stay far away even if there is a tornado.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",0);
 wrappedDB.createNewEvent(0,"Goose Monster5 on the Loose","Sticks very effective at close range.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",0);
 wrappedDB.createNewEvent(0,"Goose Monster6 on the Loose","Dangerous activity near campus pond.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",0);
-wrappedDB.createNewEvent(0,"Goose Monster8 on the Loose","Dangerous activity near campus pond.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",0);
-wrappedDB.createNewEvent(0,"News from Goodsprings","A package courier found shot in the head near Goodsprings has reportedly regained consciousness and made a full recovery.", new Date("10-19-2281"),new Date("10-19-2281"),"Goodsprings, Nevada",0);
+wrappedDB.createNewEvent(0,"Goose Monster8 on the Loose","Dangerous activity near campus pond.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",1);
+wrappedDB.createNewEvent(0,"News from Goodsprings","A package courier found shot in the head near Goodsprings has reportedly regained consciousness and made a full recovery.", new Date("10-19-2281"),new Date("10-19-2281"),"Goodsprings, Nevada",1);

@@ -1,16 +1,33 @@
 import { wrappedDB } from "../dataWrap.js";
+import { renderBoardGrid, renderFeedGrid } from "./gridRenderer.js";
 
 export function renderBoardList(boardListElement, inBoardView) {
     boardListElement.innerHTML = "";
     const userId = wrappedDB.getCurrentUser()._id;
     const boards = wrappedDB.getUserBoards(userId);
     const boardList = document.getElementById("leftDisplayBox");
+    const middleDisplayBoxElement = document.getElementById("middleDisplayBox");
+    let buttonList = []
     boards.forEach(board => {
         const listDiv = createListDiv(board);
-        const button = inBoardView ? createRemoveBox() : createCheckBox();
+        const button = inBoardView ? createRemoveBox(board, boardListElement) : createCheckBox(board, boardListElement);
+        if(!inBoardView) {buttonList.push(button)}
         listDiv.appendChild(button);
         boardList.appendChild(listDiv);
     });
+    
+    function renderingList(bID){
+        const checked = []
+        let i = 0
+        buttonList.forEach(b =>{
+            if (b.checked){
+                checked.push(boards[i]._id)
+            }
+            i++
+        })
+        return checked.includes(bID)
+    }
+    buttonList.forEach(b => b.addEventListener("change",() => renderFeedGrid(middleDisplayBoxElement, renderingList)))
 }
 
 function createListDiv(board){
@@ -20,17 +37,22 @@ function createListDiv(board){
     return newDiv;
 }
 
-function createRemoveBox(){
+function createRemoveBox(board, boardListElement){
     const newButton = document.createElement("button");
     newButton.type = "button";
     newButton.classList.add("remove-button");
     newButton.innerText = "Remove";
+    newButton.addEventListener("click", (e) =>{
+        wrappedDB.unsubscribeUserFromBoard(wrappedDB.getCurrentUser()._id, board._id)
+        renderBoardList(boardListElement, true)
+    })  
     return newButton;
 }
 
-function createCheckBox(){
+function createCheckBox(board, boardListElement){
     const newCheckBox = document.createElement("input");
     newCheckBox.type = "checkbox";
     newCheckBox.classList.add("board-view-checkbox");
+    newCheckBox.checked = true
     return newCheckBox;
 }
