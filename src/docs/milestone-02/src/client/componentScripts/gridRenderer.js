@@ -16,6 +16,15 @@ export function renderFeedGrid(element, filterFunc=()=>true) {
     createFeedGridColumns(element);
     const subscribedBoards = wrappedDB.getCurrentUser().subscribedBoards.filter(filterFunc)
     const subscribedEvents = subscribedBoards.map(boardID=>wrappedDB.getBoardEvents(boardID)).flat();
+    if (subscribedEvents.length === 0){
+        const noEventDiv = document.createElement("div")
+        element.style = `
+            text-align:center;
+        `
+        noEventDiv.innerHTML = "<h1>There are currently no events to show</h1>"
+        element.appendChild(noEventDiv)
+        return
+    }
     for (let event in subscribedEvents) {
         const minHeightDiv = feedColumns.reduce((acc, e)=>e.height < acc.height ? e : acc, feedColumns[0]);
         const newPost = createPostDiv(subscribedEvents[event]);
