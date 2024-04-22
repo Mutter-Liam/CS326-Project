@@ -92,6 +92,13 @@ export class DataWrap {static #instance = null;
         this.getBoard(boardID).subscribedUsers.push(userID);
     }
 
+    unsubscribeUserFromBoard(userID, boardID){
+        const user = this.getUser(userID)
+        const board = this.getBoard(boardID)
+        user.subscribedBoards = user.subscribedBoards.filter(x => x !== boardID)
+        board.subscribedUsers = board.subscribedUsers.filter(x => x !== userID)
+    }
+
     createNewEvent(userID, title, description, startTime, endTime, location, boardID) {
         const newEventID = this.events.addEvent(userID, title, description, startTime, endTime, location, boardID);
         this.getUser(userID).eventsCreated.push(newEventID);
@@ -141,8 +148,8 @@ export const wrappedDB = DataWrap.dataWrap();
 wrappedDB.users.addUser("Keith", "keith@voltron.org");
 wrappedDB.users.addUser("Pidge", "pidge@voltron.org");
 
-wrappedDB.boards.addBoard("Universal Threats", "Physical Activity","Robeasts that need fighting");
-wrappedDB.boards.addBoard("Universal Threats", "Physical Activity","Robeasts that need fighting");
+wrappedDB.boards.addBoard("Universal Threats 1", "Physical Activity","Robeasts that need fighting 2");
+wrappedDB.boards.addBoard("Universal Threats 2", "Physical Activity","Robeasts that need fighting 2");
 
 wrappedDB.subscribeUserToBoard(0,0);
 wrappedDB.subscribeUserToBoard(0,1);
