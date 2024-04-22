@@ -88,6 +88,7 @@ export class DataWrap {static #instance = null;
     // ---- Creating and Manipulating ----
 
     subscribeUserToBoard(userID, boardID) {
+        if (this.getUser(userID).subscribedBoards.includes(boardID)){return}
         this.getUser(userID).subscribedBoards.push(boardID);
         this.getBoard(boardID).subscribedUsers.push(userID);
     }

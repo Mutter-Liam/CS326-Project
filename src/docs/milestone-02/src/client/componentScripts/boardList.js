@@ -1,5 +1,5 @@
 import { wrappedDB } from "../dataWrap.js";
-import { renderBoardGrid, renderFeedGrid } from "./gridRenderer.js";
+import { renderFeedGrid } from "./gridRenderer.js";
 
 export function renderBoardList(boardListElement, inBoardView) {
     boardListElement.innerHTML = "";

@@ -1,4 +1,5 @@
 import { wrappedDB } from "../dataWrap.js";
+import { renderBoardList } from "./boardList.js";
 
 let feedColumnsCreated = false;
 let boardColumnsCreated = false;
@@ -49,8 +50,17 @@ function createPostDiv(event) {
 
 function createBoardDiv(board) {
     const newBoard = document.createElement("div");
+    const newButton = document.createElement("button")
+    newButton.type = "button"
+    newButton.innerText = "+"
     newBoard.classList.add("boardPost");
     newBoard.innerHTML = `<h3>${board.name}</h3><p>${board.description}</p>`;
+    newBoard.appendChild(newButton)
+    newButton.addEventListener("click", (e) => {
+        const user = wrappedDB.getCurrentUser()
+        wrappedDB.subscribeUserToBoard(user._id, board._id)
+        renderBoardList(document.getElementById("leftDisplayBox"), true)
+    })
     return {
         div: newBoard,
         height: board.name.length + board.description.length + 50
