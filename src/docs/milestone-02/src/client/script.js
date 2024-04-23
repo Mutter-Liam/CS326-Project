@@ -30,9 +30,9 @@ window.changeView = (view) => {
             break;
         case 2: // MAP VIEW
         console.log("Rendering Map View.");
-            renderBoardList(leftDisplayBoxElement);
             renderMap(middleDisplayBoxElement);
             renderEventCreate(rightDisplayBoxElement);
+            renderBoardList(leftDisplayBoxElement);
             break;
         case 3: //BOARD VIEW
         console.log("Rendering Board View.");
