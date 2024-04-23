@@ -24,21 +24,21 @@ window.changeView = (view) => {
         case 1: // FEED VIEW
             console.log("Rendering Feed View.");
             renderEventCreate(rightDisplayBoxElement);
-            renderBoardList(leftDisplayBoxElement, false);
             renderFeedGrid(middleDisplayBoxElement);
+            renderBoardList(leftDisplayBoxElement, false);
             
             break;
         case 2: // MAP VIEW
         console.log("Rendering Map View.");
-        renderEventCreate(rightDisplayBoxElement);
+            renderEventCreate(rightDisplayBoxElement);
             renderBoardList(leftDisplayBoxElement);
             renderMap(middleDisplayBoxElement);
             break;
         case 3: //BOARD VIEW
         console.log("Rendering Board View.");
-            renderBoardList(leftDisplayBoxElement, true);
             renderBoardGrid(middleDisplayBoxElement);
             renderBoardCreate(rightDisplayBoxElement);
+            renderBoardList(leftDisplayBoxElement, true);
             break;
         case 4: //SETTINGS VIEW
             console.log("Rendering Settings View.");
