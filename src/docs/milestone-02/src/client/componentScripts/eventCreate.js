@@ -23,47 +23,46 @@ function initForm(element) {
         </div>
         <div>
             <input type="text" id="eventCreateTitleInput">
-        </div><br>
+        </div>
 
         <div>
             <label for="eventBoardInput">Course:</label>
         </div>
         <div>
             <input type="text" id="eventBoardInput">
-        </div><br>
+        </div>
 
         <div>
             <label for="locationInput">Location:</label>
         </div>
         <div>
             <input type="text" id="eventCreateLocationInput">
-        </div><br>
+        </div>
 
         <div>
             <label for="startInput">Start Time:</label>
         </div>
         <div>
             <input type="text" id="eventCreateStartInput">
-        </div><br>
+        </div>
             
         <div>
             <label for="endInput">End time:</label>
         </div>
         <div>
             <input type="text" id="eventCreateEndInput">
-        </div><br>
+        </div>
 
         <div>
             <label for="descriptionInput">Description:</label>
         </div>
         <div>
             <textarea id="eventCreateDescriptionInput" name="descriptionInput" rows="4" cols="20"></textarea>
-        </div><br>
+        </div>
         
         <div>
-            <br>
             <button type="button" id="eventBroadcastButton">Broadcast!</button>
-        </div><br>
+        </div>
 
         <div id = "messageBox"></div>
     </form>

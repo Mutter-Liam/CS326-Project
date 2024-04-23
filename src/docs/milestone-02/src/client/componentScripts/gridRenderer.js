@@ -18,15 +18,9 @@ export function renderBoardGrid(element) {
 }
 
 function createSearchBar(element) {
-    element.style = "\
-        display: flex;\
-        flex-direction: column;\
-        max-height: 100%;\
-    "
+    element.classList.add("gridAndSearchContainer");
     const searchDiv = document.createElement("div");
-    searchDiv.style = "\
-    ";
-    searchDiv.classList.add("panel");
+    searchDiv.classList.add("panel","searchbar");
     searchDiv.innerText = "beep boop\nbop\nberp";
     element.appendChild(searchDiv);
     const gridDiv = document.createElement("div");
@@ -50,14 +44,7 @@ function createMissing(element, blocks, type) {
 }
 
 function createColumns(element) {
-    element.style = "\
-        display: grid;\
-        grid-template-columns: 33.33% 33.33% 33.33%;\
-        overflow-y: scroll;\
-        margin: 5px;\
-        border: solid;\
-        flex-grow: 1;\
-    ";
+    element.classList.add("columnsContainer");
     columns = [];
     for (let x = 0; x < 3; x++) {
         const newDiv = document.createElement("div");

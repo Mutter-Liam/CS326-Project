@@ -1,11 +1,6 @@
 export function renderMap(element) {
     let markerCount = 0;
-    // Get a reference to the parent container
-    const parentContainer = element.parentElement;
-
-    // Get the width and height of the parent container
-    const parentWidth = parentContainer.offsetWidth;
-    const parentHeight = parentContainer.offsetHeight;
+    element.classList.add("panel");
 
     // Create a new map centered on Amherst, Massachusetts
     const umass = { lat: 42.3868, lng: -72.5301 };
