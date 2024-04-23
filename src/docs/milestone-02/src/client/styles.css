@@ -33,6 +33,7 @@ body{
 .gridAndSearchContainer {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .searchbar {
