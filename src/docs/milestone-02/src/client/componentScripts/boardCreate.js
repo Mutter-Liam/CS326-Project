@@ -1,5 +1,6 @@
 // code for the rightHandDisplayBox of wireframe 3.
 import { wrappedDB } from "../dataWrap.js";
+import { renderBoardGrid, renderFeedGrid } from "./gridRenderer.js";
 
 
 export function renderBoardCreate(element) {
@@ -57,12 +58,16 @@ function initForm(element) {
     publishButton.addEventListener("click", function () {
         // if one of the input boxes are blank abort publish and alert user
         if (!nameInput.value || !typeInput.value || !descriptionInput.value) {
-            alert("one of the boxes are empty lol");
+            alert("One of the boxes are empty!");
         }
         else{
             // else create a new board and inform user 
             wrappedDB.createNewBoard(nameInput.value, typeInput.value, descriptionInput.value);
             alert("Board created successfully!");
+            // rerender our boards now that we have a new board we can show. 
+            let middleDisplayBoxElement = document.getElementById("middleDisplayBox");
+            middleDisplayBoxElement.innerHTML = "";
+            renderBoardGrid(middleDisplayBoxElement);
         }
     });
 }

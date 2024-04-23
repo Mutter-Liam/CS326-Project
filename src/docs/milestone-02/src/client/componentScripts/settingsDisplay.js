@@ -3,8 +3,11 @@ import { wrappedDB } from "../dataWrap.js";
 
 
 export function renderSettings(element) {
-    // clear the content of the element. 
+    // clear screen's contents, as well as the grid styling that could be there. 
     element.innerHTML = "";
+    element.removeAttribute('style');
+    document.getElementById("leftDisplayBox").innerHTML = "";
+    document.getElementById("rightDisplayBox").innerHTML = "";
 
     // inject the display. 
     element.innerHTML = `

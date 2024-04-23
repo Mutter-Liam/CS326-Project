@@ -94,19 +94,3 @@ function initForm(element) {
         }
     });
 }
-
-
-/*
-class Event {
-    constructor(author, title, description, startTime, endTime, location, board) {
-        this.author = author;
-        this.title = title;
-        this.description = description;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.location = location;
-        this.board = board;
-    }
-}
-
-*/
