@@ -1,7 +1,6 @@
 // code for the rightHandDisplayBox of wireframe 3.
 import { wrappedDB } from "../dataWrap.js";
 
-
 export function renderEventCreate(element) {
     // clear the content of the element. 
     element.innerHTML = "";
@@ -64,7 +63,9 @@ function initForm(element) {
         <div>
             <br>
             <button type="button" id="eventBroadcastButton">Broadcast!</button>
-        </div>
+        </div><br>
+
+        <div id = "messageBox"></div>
     </form>
     `;
 
@@ -76,21 +77,38 @@ function initForm(element) {
     const startInput = new Date(document.getElementById("eventCreateStartInput"));
     const endInput = new Date(document.getElementById("eventCreateEndInput"));
     const descriptionInput = document.getElementById("eventCreateDescriptionInput");
+    const messageBoxElement = document.getElementById("messageBox");
 
     // Add event listener for the broadcast button
     broadCastButton.addEventListener("click", function () {
         // if one of the input boxes are blank abort publish and alert user
         if (!titleInput.value || !locationInput.value || !startInput || !endInput || !descriptionInput.value || !eventBoardInput.value) {
-            alert("one of the boxes are empty lol");
-            console.log(!titleInput, !locationInput.value, !startInput, !endInput, !descriptionInput.value, !eventBoardInput.value);
+            // inform the user to create input correctly.
+            messageBoxElement.innerHTML = "One of the boxes are empty!";
+
+            // hide the message after 5 seconds
+            setTimeout(function() {
+                messageBoxElement.innerHTML = "";
+            }, 5000);
         }
         else{
             // else create a new board and inform user 
-            //wrappedDB.createNewEvent();
             const userID = wrappedDB.getCurrentUser()._id;
-            //console.log(userID);
-            wrappedDB.createNewEvent(userID, titleInput.value, descriptionInput.value, startInput, endInput, locationInput.value, eventBoardInput);
-            alert("Event broadcasted successfully!");
+
+            // wrappedDB.createNewEvent(userID, titleInput.value, descriptionInput.value, startInput, endInput, locationInput.value, eventBoardInput);
+            wrappedDB.createNewEvent(userID, titleInput.value, descriptionInput.value, startInput, endInput, locationInput.value, 0);
+            // becuase of its nature, the middle board refresh is handled by boardList.js.
+            
+            // now that everything is done we can reset the boxes to blank.
+            titleInput.innerHTML, locationInput.innerHTML, startInput.innerHTML, endInput.innerHTML, descriptionInput.innerHTML, eventBoardInput.innerHTML = "";
+
+            // inform the user the board was successfully created
+            messageBoxElement.innerHTML = "Board successfully created!";
+
+            // hide the message after 5 seconds
+            setTimeout(function() {
+                messageBoxElement.innerHTML = "";
+            }, 5000);
         }
     });
 }

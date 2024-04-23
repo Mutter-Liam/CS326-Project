@@ -23,9 +23,10 @@ window.changeView = (view) => {
     switch (view) {
         case 1: // FEED VIEW
             console.log("Rendering Feed View.");
+            renderEventCreate(rightDisplayBoxElement);
             renderBoardList(leftDisplayBoxElement, false);
             renderFeedGrid(middleDisplayBoxElement);
-            renderEventCreate(rightDisplayBoxElement);
+            
             break;
         case 2: // MAP VIEW
         console.log("Rendering Map View.");

@@ -28,6 +28,12 @@ export function renderBoardList(boardListElement, inBoardView) {
         return checked.includes(bID)
     }
     buttonList.forEach(b => b.addEventListener("change",() => renderFeedGrid(middleDisplayBoxElement, renderingList)))
+
+    // small addedum to refresh the events feed if a new event if published.
+    if (!inBoardView){
+        const eventBroadcastButtonElement = document.getElementById("eventBroadcastButton");
+        eventBroadcastButtonElement.addEventListener("click", () => renderFeedGrid(middleDisplayBoxElement, renderingList));
+    }
 }
 
 function createListDiv(board){

@@ -1,6 +1,6 @@
 // code for the rightHandDisplayBox of wireframe 3.
 import { wrappedDB } from "../dataWrap.js";
-import { renderBoardGrid, renderFeedGrid } from "./gridRenderer.js";
+import { renderBoardGrid } from "./gridRenderer.js";
 
 
 export function renderBoardCreate(element) {
@@ -42,8 +42,9 @@ function initForm(element) {
         
         <div>
             <button type="button" id="boardPublishButton">Publish!</button>
-        </div>
-        
+        </div><br>
+
+        <div id = "messageBox"></div>
     </form>
     `;
     
@@ -53,21 +54,36 @@ function initForm(element) {
     const nameInput = document.getElementById("boardCreateNameInput");
     const typeInput = document.getElementById("boardCreateTypeInput");
     const descriptionInput = document.getElementById("boardCreateDescriptionInput");
+    const messageBoxElement = document.getElementById("messageBox");
 
     // Add event listener for the publish button
     publishButton.addEventListener("click", function () {
         // if one of the input boxes are blank abort publish and alert user
         if (!nameInput.value || !typeInput.value || !descriptionInput.value) {
-            alert("One of the boxes are empty!");
+            messageBoxElement.innerHTML = "One of the boxes are empty!";
+
+            // autoclear said message after 5 seconds
+            setTimeout(function() {
+                messageBoxElement.innerHTML = "";
+            }, 5000);
         }
         else{
-            // else create a new board and inform user 
+            // create the new board
             wrappedDB.createNewBoard(nameInput.value, typeInput.value, descriptionInput.value);
-            alert("Board created successfully!");
+            
+
             // rerender our boards now that we have a new board we can show. 
             let middleDisplayBoxElement = document.getElementById("middleDisplayBox");
             middleDisplayBoxElement.innerHTML = "";
             renderBoardGrid(middleDisplayBoxElement);
+
+            // inform our user that the board has successfully been created
+            messageBoxElement.innerHTML = "Board successfully created!";
+
+            // autoclear said message after 5 seconds
+            setTimeout(function() {
+                messageBoxElement.innerHTML = "";
+            }, 5000);
         }
     });
 }
