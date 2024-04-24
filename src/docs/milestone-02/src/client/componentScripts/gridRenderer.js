@@ -1,5 +1,6 @@
 import { wrappedDB } from "../dataWrap.js";
 import { renderBoardList } from "./boardList.js";
+import { renderEventDetails } from "./eventDetailRenderer.js";
 
 let feedColumnsCreated = false;
 let boardColumnsCreated = false;
@@ -25,10 +26,12 @@ export function renderFeedGrid(element, filterFunc=()=>true) {
         return
     }
     for (let event in subscribedEvents) {
+        // addendum: add on click eventDetailRenderer for every printed event
         const minHeightDiv = feedColumns.reduce((acc, e)=>e.height < acc.height ? e : acc, feedColumns[0]);
         const newPost = createPostDiv(subscribedEvents[event]);
         minHeightDiv.element.appendChild(newPost.div);
         minHeightDiv.height += newPost.height;
+        
     }
 }
 export function renderBoardGrid(element) {
@@ -48,6 +51,8 @@ export function renderBoardGrid(element) {
 
 function createPostDiv(event) {
     const newPost = document.createElement("div");
+    // ADDENDUM: every newPost can be clicked on to invokke eventDetailRenderer, showing all of the event's details in rightDisplaybox.
+    newPost.addEventListener("click", () => renderEventDetails(event));
     newPost.classList.add("feedPost");
     newPost.innerHTML = `<h3>${event.title}</h3><p>${event.description}</p>`;
     return {

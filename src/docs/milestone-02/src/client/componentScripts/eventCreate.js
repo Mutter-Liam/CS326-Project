@@ -74,8 +74,8 @@ function initForm(element) {
     const eventBoardInput = document.getElementById("eventBoardInput");
     const titleInput = document.getElementById("eventCreateTitleInput");
     const locationInput = document.getElementById("eventCreateLocationInput");
-    const startInput = new Date(document.getElementById("eventCreateStartInput"));
-    const endInput = new Date(document.getElementById("eventCreateEndInput"));
+    const startInput = document.getElementById("eventCreateStartInput");
+    const endInput = document.getElementById("eventCreateEndInput");
     const descriptionInput = document.getElementById("eventCreateDescriptionInput");
     const messageBoxElement = document.getElementById("messageBox");
 
@@ -90,13 +90,21 @@ function initForm(element) {
             setTimeout(function() {
                 messageBoxElement.innerHTML = "";
             }, 5000);
+        }else if(!isValidDateFormat(startInput.value) || !isValidDateFormat(endInput.value)){
+            // inform the user the board was successfully created
+            messageBoxElement.innerHTML = "Invalid date input (mm-dd-yyyy)";
+
+            // hide the message after 5 seconds
+            setTimeout(function() {
+                messageBoxElement.innerHTML = "";
+            }, 5000);
         }
         else{
             // else create a new board and inform user 
             const userID = wrappedDB.getCurrentUser()._id;
 
             // wrappedDB.createNewEvent(userID, titleInput.value, descriptionInput.value, startInput, endInput, locationInput.value, eventBoardInput);
-            wrappedDB.createNewEvent(userID, titleInput.value, descriptionInput.value, startInput, endInput, locationInput.value, 0);
+            wrappedDB.createNewEvent(userID, titleInput.value, descriptionInput.value, startInput.value, endInput.value, locationInput.value, 0);
             // becuase of its nature, the middle board refresh is handled by boardList.js.
             
             // now that everything is done we can reset the boxes to blank.
@@ -112,3 +120,17 @@ function initForm(element) {
         }
     });
 }
+
+function isValidDateFormat(dateString) {
+    // Regular expression for mm-dd-yyyy format
+    var regex = /^(0[1-9]|1[0-2])-(0[1-9]|1\d|2\d|3[01])-(19|20)\d{2}$/;
+  
+    // Test the string against the regular expression
+    return regex.test(dateString);
+  }
+  
+  // Example usage
+  console.log(isValidDateFormat("12-31-2023")); // Output: true
+  console.log(isValidDateFormat("31-12-2023")); // Output: false (wrong format)
+  console.log(isValidDateFormat("12/31/2023")); // Output: false (wrong delimiter)
+  
