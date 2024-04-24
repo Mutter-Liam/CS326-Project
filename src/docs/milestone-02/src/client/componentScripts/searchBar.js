@@ -10,6 +10,26 @@ export function renderSearchBar(element, inBoardView) {
     }
 }
 
+//If str1 is contained somewhere in str2 return
+export function matchStrings(str1, str2){
+    str1 = str1.replace(/\s/g, '');
+    str2 = str2.replace(/\s/g, '');
+    console.log(str1,"-" ,str2)
+    if (str1.length === 0 || str2.length === 0) return true;
+    for (let i = 0; i < str2.length - str1.length + 1; i++){
+        let valid = true;
+        for (let j = 0; j < str1.length; j++){
+            if (str2[i + j] !== str1[j]){
+                console.log(str2[i + j] ,str1[j] )
+                valid = false;
+            }
+        }
+        console.log(str1, str2, valid, "<-")
+        if (valid) return true;
+    }
+    return false;
+}
+
 function renderBoardSearchBar(element){
     // inject all of our boxes into the specified element
     element.innerHTML = `
@@ -55,3 +75,4 @@ function renderEventSearchBar(element){
     element.style.justifyContent = "center";
     element.style.alignItems = "center";
 }
+

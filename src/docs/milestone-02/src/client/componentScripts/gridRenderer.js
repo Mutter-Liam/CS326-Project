@@ -1,7 +1,7 @@
 import { wrappedDB } from "../dataWrap.js";
 import { renderBoardList } from "./boardList.js";
 import { renderEventDetails } from "./eventDetailRenderer.js";
-import { renderSearchBar } from "./searchBar.js";
+import { matchStrings, renderSearchBar } from "./searchBar.js";
 
 let columns = [];
 
@@ -18,18 +18,12 @@ export function renderBoardGrid(element, filterName) {
 
     let filteredBoards = {}
     // filter out Boards based on filter Name
-    for (const board in boards){
-        //console.log(boards[board].name);
-        if (filterName == ""){
-            filteredBoards = boards;
-            console.log("nothing in filter");
-            continue;
-        }
-        // if they share the same name add it for rendering.
-        if (String(filterName).toLowerCase() == boards[board].name.toLowerCase()){
+    Object.keys(boards).forEach(board => {
+        console.log(matchStrings(filterName.toLowerCase(), boards[board].name.toLowerCase()), filterName, )
+        if (matchStrings(filterName.toLowerCase(), boards[board].name.toLowerCase())){
             filteredBoards[board] = boards[board];
         }
-    }
+    });
 
     const gridDiv = createSearchBar(element, true);
     createGrid(gridDiv, filteredBoards, "board");
