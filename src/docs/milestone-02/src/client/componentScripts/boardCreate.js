@@ -75,7 +75,7 @@ function initForm(element) {
             // rerender our boards now that we have a new board we can show. 
             let middleDisplayBoxElement = document.getElementById("middleDisplayBox");
             middleDisplayBoxElement.innerHTML = "";
-            renderBoardGrid(middleDisplayBoxElement);
+            renderBoardGrid(middleDisplayBoxElement, "");
 
             // inform our user that the board has successfully been created
             messageBoxElement.innerHTML = "Board successfully created!";

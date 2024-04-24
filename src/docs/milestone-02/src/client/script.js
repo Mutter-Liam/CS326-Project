@@ -36,7 +36,7 @@ window.changeView = (view) => {
             break;
         case 3: //BOARD VIEW
         console.log("Rendering Board View.");
-            renderBoardGrid(middleDisplayBoxElement);
+            renderBoardGrid(middleDisplayBoxElement, "");
             renderBoardCreate(rightDisplayBoxElement);
             renderBoardList(leftDisplayBoxElement, true);
             break;
@@ -49,4 +49,4 @@ window.changeView = (view) => {
     return true;
 }
 
-window.changeView(1);
+window.changeView(3);

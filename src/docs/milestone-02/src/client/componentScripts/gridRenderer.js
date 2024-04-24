@@ -1,6 +1,7 @@
 import { wrappedDB } from "../dataWrap.js";
 import { renderBoardList } from "./boardList.js";
 import { renderEventDetails } from "./eventDetailRenderer.js";
+import { renderSearchBar } from "./searchBar.js";
 
 let columns = [];
 
@@ -8,22 +9,43 @@ export function renderFeedGrid(element, boardFilterFunc=()=>true) {
     element.innerHTML = ""
     const subscribedBoards = wrappedDB.getCurrentUser().subscribedBoards.filter(boardFilterFunc)
     const subscribedEvents = subscribedBoards.map(boardID=>wrappedDB.getBoardEvents(boardID)).flat();
-    const gridDiv = createSearchBar(element);
+    const gridDiv = createSearchBar(element, false);
     createGrid(gridDiv, subscribedEvents, "event");
 }
-export function renderBoardGrid(element) {
-    element.innerHTML = ""
+export function renderBoardGrid(element, filterName) {
+    element.innerHTML = "";
     const boards = wrappedDB.boards.boards;
-    const gridDiv = createSearchBar(element);
-    createGrid(gridDiv, boards, "board");
+
+    let filteredBoards = {}
+    // filter out Boards based on filter Name
+    for (const board in boards){
+        //console.log(boards[board].name);
+        if (filterName == ""){
+            filteredBoards = boards;
+            console.log("nothing in filter");
+            continue;
+        }
+        // if they share the same name add it for rendering.
+        if (String(filterName).toLowerCase() == boards[board].name.toLowerCase()){
+            filteredBoards[board] = boards[board];
+        }
+    }
+
+    const gridDiv = createSearchBar(element, true);
+    createGrid(gridDiv, filteredBoards, "board");
 }
 
-function createSearchBar(element) {
+function createSearchBar(element, inBoardView) {
     element.classList.add("gridAndSearchContainer");
     const searchDiv = document.createElement("div");
     searchDiv.classList.add("panel","searchbar");
-    searchDiv.innerText = "beep boop\nbop\nberp";
     element.appendChild(searchDiv);
+    if (inBoardView){
+        renderSearchBar(searchDiv, true);
+    }
+    else{
+        renderSearchBar(searchDiv, false);
+    }
     const gridDiv = document.createElement("div");
     element.appendChild(gridDiv);
     return gridDiv;

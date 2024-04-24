@@ -57,7 +57,7 @@ function initForm(element) {
         // check to see if the board exsits
         for (const board in wrappedDB.getAllBoards()){
             // if the name matches up steal the boardID and set our earlier boolean to true
-            console.log(wrappedDB.getAllBoards()[board].name);
+            //console.log(wrappedDB.getAllBoards()[board].name);
             if (eventBoardInput.value == wrappedDB.getAllBoards()[board].name){
                 boardDoesNotExist = false;
                 boardID = board;
