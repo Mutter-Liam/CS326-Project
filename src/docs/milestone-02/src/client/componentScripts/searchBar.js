@@ -14,17 +14,14 @@ export function renderSearchBar(element, inBoardView) {
 export function matchStrings(str1, str2){
     str1 = str1.replace(/\s/g, '');
     str2 = str2.replace(/\s/g, '');
-    console.log(str1,"-" ,str2)
     if (str1.length === 0 || str2.length === 0) return true;
     for (let i = 0; i < str2.length - str1.length + 1; i++){
         let valid = true;
         for (let j = 0; j < str1.length; j++){
             if (str2[i + j] !== str1[j]){
-                console.log(str2[i + j] ,str1[j] )
                 valid = false;
             }
         }
-        console.log(str1, str2, valid, "<-")
         if (valid) return true;
     }
     return false;
@@ -60,8 +57,9 @@ function renderBoardSearchBar(element){
     // clear the search bar and print every board/
     clearButtonElement.addEventListener("click", function () {
         renderBoardGrid(middleDisplayBoxElement, "");
+        
     });
-
+   // document.getElementById("boardSearchNameInput").addEventListener("update")
     
 }
 
