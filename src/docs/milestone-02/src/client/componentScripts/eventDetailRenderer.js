@@ -2,7 +2,7 @@ import { wrappedDB } from "../dataWrap.js";
 import { renderEventCreate } from "./eventCreate.js";
 
 export function renderEventDetails(currEvent){
-    // TODO save whatever's in eventCreate.js at the moment to rerender after closing these details.
+
     
     const rightDisplayBox = document.getElementById("rightDisplayBox");
 
