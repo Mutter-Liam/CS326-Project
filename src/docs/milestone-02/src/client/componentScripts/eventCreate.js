@@ -14,59 +14,28 @@ function initForm(element) {
     // inject all of our search bars and buttons to the element
     // replicated and ugly code up the ass, but this is the best we can do if we don't want to fiddle with styles.css.
     element.innerHTML = `
-    <h2>
-        Create an Event!
-    </h2>
-    <form>
-        <div>
-            <label for="titleInput">Title:</label>
-        </div>
-        <div>
-            <input type="text" id="eventCreateTitleInput">
-        </div><br>
+    <h2> Create an Event!</h2>
+    <div>Title:</div>
+    <div><input type="text" id="eventCreateTitleInput"></div><br>
 
-        <div>
-            <label for="eventBoardInput">Course:</label>
-        </div>
-        <div>
-            <input type="text" id="eventBoardInput">
-        </div><br>
+    <div>Course/Board:</div>
+    <div><input type="text" id="eventBoardInput"></div><br>
 
-        <div>
-            <label for="locationInput">Location:</label>
-        </div>
-        <div>
-            <input type="text" id="eventCreateLocationInput">
-        </div><br>
+    <div>Location:</div>
+    <div><input type="text" id="eventCreateLocationInput"></div><br>
 
-        <div>
-            <label for="startInput">Start Time:</label>
-        </div>
-        <div>
-            <input type="text" id="eventCreateStartInput">
-        </div><br>
+    <div>Start time:</div>
+    <div><input type="text" id="eventCreateStartInput"></div><br>
             
-        <div>
-            <label for="endInput">End time:</label>
-        </div>
-        <div>
-            <input type="text" id="eventCreateEndInput">
-        </div><br>
+    <div>End Time: </div>
+    <div><input type="text" id="eventCreateEndInput"></div><br>
 
-        <div>
-            <label for="descriptionInput">Description:</label>
-        </div>
-        <div>
-            <textarea id="eventCreateDescriptionInput" name="descriptionInput" rows="4" cols="20"></textarea>
-        </div><br>
+    <div>Description:</div>
+    <div><textarea id="eventCreateDescriptionInput" name="descriptionInput" rows="4" cols="20"></textarea></div><br><br>
         
-        <div>
-            <br>
-            <button type="button" id="eventBroadcastButton">Broadcast!</button>
-        </div><br>
+    <div><button type="button" id="eventBroadcastButton">Broadcast!</button></div><br>
 
-        <div id = "messageBox"></div>
-    </form>
+    <div id = "messageBox"></div>
     `;
 
     // formally recognize our input boxes and the broadcast button
@@ -81,30 +50,58 @@ function initForm(element) {
 
     // Add event listener for the broadcast button
     broadCastButton.addEventListener("click", function () {
+        // little variables for board checking
+        let boardDoesNotExist = true;
+        let boardID = null;
+
+        // check to see if the board exsits
+        for (const board in wrappedDB.getAllBoards()){
+            // if the name matches up steal the boardID and set our earlier boolean to true
+            console.log(wrappedDB.getAllBoards()[board].name);
+            if (eventBoardInput.value == wrappedDB.getAllBoards()[board].name){
+                boardDoesNotExist = false;
+                boardID = board;
+                console.log("found the board!");
+            }
+        }
+
+        // did the boardInput actually correlate to a real board?
+        if (boardDoesNotExist){
+            // inform the user to create input correctly.
+            messageBoxElement.innerHTML = "It looks like the board/topic doesn't exist. Try making it yourself!";
+
+            // hide the message after 5 seconds
+            setTimeout(function() {
+                messageBoxElement.innerHTML = "";
+            }, 4000);
+        }
         // if one of the input boxes are blank abort publish and alert user
-        if (!titleInput.value || !locationInput.value || !startInput || !endInput || !descriptionInput.value || !eventBoardInput.value) {
+        else if (!titleInput.value || !locationInput.value || !startInput || !endInput || !descriptionInput.value || !eventBoardInput.value) {
             // inform the user to create input correctly.
             messageBoxElement.innerHTML = "One of the boxes are empty!";
 
             // hide the message after 5 seconds
             setTimeout(function() {
                 messageBoxElement.innerHTML = "";
-            }, 5000);
-        }else if(!isValidDateFormat(startInput.value) || !isValidDateFormat(endInput.value)){
-            // inform the user the board was successfully created
-            messageBoxElement.innerHTML = "Invalid date input (mm-dd-yyyy)";
+            }, 4000);
+        }
+        // if user puts in invalid date format
+        else if(!isValidDateFormat(startInput.value) || !isValidDateFormat(endInput.value)){
+            // inform the user to put in the correct date format.
+            messageBoxElement.innerHTML = "Invalid date format (mm-dd-yyyy)";
 
             // hide the message after 5 seconds
             setTimeout(function() {
                 messageBoxElement.innerHTML = "";
-            }, 5000);
-        }
+            }, 4000);
+        } 
+        // else this is a valid input, go and create
         else{
             // else create a new board and inform user 
             const userID = wrappedDB.getCurrentUser()._id;
 
             // wrappedDB.createNewEvent(userID, titleInput.value, descriptionInput.value, startInput, endInput, locationInput.value, eventBoardInput);
-            wrappedDB.createNewEvent(userID, titleInput.value, descriptionInput.value, startInput.value, endInput.value, locationInput.value, 0);
+            wrappedDB.createNewEvent(userID, titleInput.value, descriptionInput.value, new Date(startInput.value), new Date(endInput.value), locationInput.value, boardID);
             // becuase of its nature, the middle board refresh is handled by boardList.js.
             
             // now that everything is done we can reset the boxes to blank.
@@ -116,21 +113,15 @@ function initForm(element) {
             // hide the message after 5 seconds
             setTimeout(function() {
                 messageBoxElement.innerHTML = "";
-            }, 5000);
+            }, 4000);
         }
     });
 }
 
 function isValidDateFormat(dateString) {
-    // Regular expression for mm-dd-yyyy format
+    // regular expression for mm-dd-yyyy format
     var regex = /^(0[1-9]|1[0-2])-(0[1-9]|1\d|2\d|3[01])-(19|20)\d{2}$/;
   
-    // Test the string against the regular expression
+    // test the string against the regular expression
     return regex.test(dateString);
-  }
-  
-  // Example usage
-  console.log(isValidDateFormat("12-31-2023")); // Output: true
-  console.log(isValidDateFormat("31-12-2023")); // Output: false (wrong format)
-  console.log(isValidDateFormat("12/31/2023")); // Output: false (wrong delimiter)
-  
+}

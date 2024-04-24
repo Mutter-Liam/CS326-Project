@@ -131,6 +131,9 @@ export class DataWrap {static #instance = null;
     getBoardEvents(id) {
         return this.getBoard(id).events.map((x)=>this.getEvent(x));
     }
+    getAllBoards (){
+        return this.boards.boards;
+    }
 
     // ---- Event based functions ----
     getEvent(id) {

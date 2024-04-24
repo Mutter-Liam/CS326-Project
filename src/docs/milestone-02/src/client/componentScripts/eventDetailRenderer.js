@@ -23,8 +23,8 @@ export function renderEventDetails(currEvent){
 
     </br>
     <h4>Where and when?</h4>
-    <div id="location">Location: </div>
-    <div id="startTime">Start Time: </div>
+    <div id="location">Location: </div><br>
+    <div id="startTime">Start Time: </div><br>
     <div id="endTime">End Time: </div>
     
     </br>

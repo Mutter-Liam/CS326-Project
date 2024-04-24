@@ -11,18 +11,10 @@ export function renderSettings(element) {
 
     // inject the display. 
     element.innerHTML = `
-    <h2>
-        Account Settings
-    </h2>
-    <div>
-        <label id="emailDisplay">Email: </label>
-    </div>
-    <div>
-        <label id="usernameDisplay">Username: </label>
-    </div>
-    <div>
-        <label id="karmaDisplay">Karma: </label>
-    </div><br>
+    <h2>Account Settings</h2>
+    <div><label id="emailDisplay">Email: </label></div>
+    <div><label id="usernameDisplay">Username: </label></div>
+    <div><label id="karmaDisplay">Karma: </label></div><br>
 
     <div>
         <label class="switch" if="karmaSwitchToggle">
@@ -32,7 +24,6 @@ export function renderSettings(element) {
         </label>
     </div>
     
-
     <div>
         <label class="switch", id="autolocationToggle">
         Autolocation:
@@ -69,7 +60,4 @@ export function renderSettings(element) {
     const karmaToggle = document.getElementById("karmaToggle");
     const autolocationToggle = document.getElementById("autolocationToggle");
     const notificationToggle = document.getElementById("notificationToggle");
-
-    // can't have fancy toggle buttons if we don't improve our CSS.
-    // reference here: https://www.w3schools.com/howto/howto_css_switch.asp
 }
