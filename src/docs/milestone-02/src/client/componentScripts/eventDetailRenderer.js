@@ -54,14 +54,19 @@ export async function renderEventDetails(currEvent){
     const descriptionElement = document.getElementById("thisEventdescription");
     const attendButtonElement = document.getElementById("attendButton");
 
-    // shove details in 
+    // request author/board details
+    const authorDetails = await wrappedDB.getUser(currEvent.author)
+    const boardDetails = await wrappedDB.getBoard(currEvent.board);
+
+    // shove details in
     titleElement.innerHTML = currEvent.title;
-    authorElement.innerHTML += wrappedDB.getUser(currEvent.author).username;
-    karmaElement.innerHTML += wrappedDB.getUser(currEvent.author).karma;
+    console.log(currEvent.author);
+    authorElement.innerHTML += authorDetails.username;
+    karmaElement.innerHTML += authorDetails.karma;
     startTimeElement.innerHTML += currEvent.startTime;
     endTimeElement.innerHTML += currEvent.endTime;
     locationElement.innerHTML += currEvent.location;
-    eventBoardElement.innerHTML += wrappedDB.getBoard(currEvent.board).name;
+    eventBoardElement.innerHTML += boardDetails.name;
     descriptionElement.innerHTML = currEvent.description;
 
     // make a variable for the current User's ID for manipulation.

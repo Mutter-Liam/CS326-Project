@@ -14,8 +14,9 @@ export async function renderSettings(element) {
     <h2>Account Settings</h2>
     <div><label id="emailDisplay">Email: </label></div>
     <div><label id="usernameDisplay">Username: </label></div>
-    <div><label id="karmaDisplay">Karma: </label></div>
-    <div id="attendingDisplay">Events I'm planning to attend:<br /></div><br>
+    <div><label id="karmaDisplay">Karma: </label></div><br>
+    <h3>Events I'm planning to attend:</h3>
+    <div id="attendingDisplay"><br /></div><br>
     `;
     
 
