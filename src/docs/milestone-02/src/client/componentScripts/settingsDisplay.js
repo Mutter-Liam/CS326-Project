@@ -39,7 +39,8 @@ export async function renderSettings(element) {
     emailDisplay.innerHTML += userInfo.email;
     usernameDisplay.innerHTML += userInfo.username;
     karmaDisplay.innerHTML += userInfo.karma;
-    console.log(userInfo.eventsAttending);
+
+    // fill in the list of events to attend
     for (let index in userInfo.eventsAttending){
         let currEvent = userInfo.eventsAttending[index];
         attendingDisplayElement.innerHTML += (currEvent.title += " on ");

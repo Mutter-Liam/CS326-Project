@@ -23,7 +23,6 @@ export function renderEventCreate(element) {
  * @param { HTMLElement } element html to render the event creation tab.
  */
 function initForm(element) {
-    console.log(element);
 
     // inject all of our search bars and buttons to the element
     element.innerHTML = `
@@ -142,4 +141,3 @@ function isValidDateFormat(dateString) {
     // test the string against the regular expression
     return regex.test(dateString);
 }
-
