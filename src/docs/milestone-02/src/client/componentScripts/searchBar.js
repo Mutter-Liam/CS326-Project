@@ -57,9 +57,9 @@ function renderBoardSearchBar(element){
         renderBoardGrid(middleDisplayBoxElement, "");
         
     });*/
-    document.getElementById("boardSearchNameInput").addEventListener("input", (e) => {
+    document.getElementById("boardSearchNameInput").addEventListener("input", async (e) => {
         const input =  document.getElementById("boardSearchNameInput").value
-        renderBoardGrid(middleDisplayBoxElement, input)
+        await renderBoardGrid(middleDisplayBoxElement, input)
         document.getElementById("boardSearchNameInput").value = input
         document.getElementById("boardSearchNameInput").focus()
     });

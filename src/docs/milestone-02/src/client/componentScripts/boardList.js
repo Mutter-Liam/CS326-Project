@@ -1,12 +1,25 @@
 import { wrappedDB } from "../dataWrap.js";
 import { renderFeedGrid } from "./gridRenderer.js";
 
-export function renderBoardList(boardListElement, inBoardView) {
+export async function renderBoardList(boardListElement, inBoardView) {
     boardListElement.innerHTML = "";
-    const userId = wrappedDB.getCurrentUser()._id;
-    const boards = wrappedDB.getUserBoards(userId);
-    const boardList = document.getElementById("leftDisplayBox");
-    const middleDisplayBoxElement = document.getElementById("middleDisplayBox");
+    let userID;
+    let boards;
+    let boardList;
+    let middleDisplayBoxElement;
+    try{
+        userID = (await wrappedDB.getCurrentUser())._id;
+        boards = await wrappedDB.getUserBoards(userID);
+        boardList = document.getElementById("leftDisplayBox");
+        middleDisplayBoxElement = document.getElementById("middleDisplayBox");
+    }
+    catch(e){
+        console.log("Something went wrong in renderBoardList", e)
+        const error = document.createElement("div")
+        error.innerHTML = `<h2>No Boards To Show</h2>`
+        document.getElementById("leftDisplayBox").appendChild(error)
+        return
+    }
     let buttonList = []
     boards.forEach(board => {
         const listDiv = createListDiv(board);
@@ -48,8 +61,8 @@ function createRemoveBox(board, boardListElement){
     newButton.type = "button";
     newButton.classList.add("remove-button");
     newButton.innerText = "Remove";
-    newButton.addEventListener("click", (e) =>{
-        wrappedDB.unsubscribeUserFromBoard(wrappedDB.getCurrentUser()._id, board._id)
+    newButton.addEventListener("click", async (e) =>{
+        await wrappedDB.unsubscribeUserFromBoard((await wrappedDB.getCurrentUser())._id, board._id)
         renderBoardList(boardListElement, true)
     })  
     return newButton;
