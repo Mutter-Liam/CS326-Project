@@ -18,30 +18,30 @@ renderHeaderBar(headerBarElement);
 
 // FOR DEBUGGING BEFORE ADDING TRANSITION BUTTONS:
 
-window.changeView = (view) => {
+window.changeView = (view, logging=true) => {
     [leftDisplayBoxElement, middleDisplayBoxElement, rightDisplayBoxElement].forEach(x=>x.innerHTML="");
     switch (view) {
         case 1: // FEED VIEW
-            console.log("Rendering Feed View.");
+            if (logging) console.log("Rendering Feed View.");
             renderEventCreate(rightDisplayBoxElement);
             renderFeedGrid(middleDisplayBoxElement);
             renderBoardList(leftDisplayBoxElement, false);
             
             break;
         case 2: // MAP VIEW
-        console.log("Rendering Map View.");
+            if (logging) console.log("Rendering Map View.");
             renderEventCreate(rightDisplayBoxElement);
             renderBoardList(leftDisplayBoxElement);
             renderMap(middleDisplayBoxElement);
             break;
         case 3: //BOARD VIEW
-        console.log("Rendering Board View.");
-            renderBoardGrid(middleDisplayBoxElement, "");
+            if (logging) console.log("Rendering Board View.");
+            renderBoardGrid(middleDisplayBoxElement);
             renderBoardCreate(rightDisplayBoxElement);
             renderBoardList(leftDisplayBoxElement, true);
             break;
         case 4: //SETTINGS VIEW
-            console.log("Rendering Settings View.");
+            if (logging) console.log("Rendering Settings View.");
             //REPLACE WITH RENDER CALLS
             renderSettings(middleDisplayBoxElement);
             break;
@@ -49,6 +49,17 @@ window.changeView = (view) => {
     return true;
 }
 
-  
+document.getElementById("feedBtn").onclick = () => {
+    changeView(1, false);
+}
+document.getElementById("mapBtn").onclick = () => {
+    changeView(2, false);
+}
+document.getElementById("boardsBtn").onclick = () => {
+    changeView(3, false);
+}
+document.getElementById("settingsBtn").onclick = () => {
+    changeView(4, false);
+}
 
-window.changeView(1);
+changeView(1,false);
