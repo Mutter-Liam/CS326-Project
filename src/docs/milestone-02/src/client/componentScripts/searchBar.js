@@ -32,8 +32,6 @@ function renderBoardSearchBar(element){
     element.innerHTML = `
         <label for="boardSearchNameInput">Name of Board:</label>
         <input type="text" id="boardSearchNameInput">
-        <button id="boardSearchButton">Search!</button>
-        <button id="boardSearchClearButton">Clear</button>
     `;
 
     // formally recognize our buttons
@@ -47,7 +45,7 @@ function renderBoardSearchBar(element){
     element.style.justifyContent = "center";
     element.style.alignItems = "center";
 
-    
+    /*
     // add event listeners to rerender the BoardList with our defined input word.
     searchButtonElement.addEventListener("click", function () {
         const input = document.getElementById("boardSearchNameInput");
@@ -58,11 +56,14 @@ function renderBoardSearchBar(element){
     clearButtonElement.addEventListener("click", function () {
         renderBoardGrid(middleDisplayBoxElement, "");
         
+    });*/
+    document.getElementById("boardSearchNameInput").addEventListener("input", (e) => {
+        const input =  document.getElementById("boardSearchNameInput").value
+        renderBoardGrid(middleDisplayBoxElement, input)
+        document.getElementById("boardSearchNameInput").value = input
+        document.getElementById("boardSearchNameInput").focus()
     });
-   // document.getElementById("boardSearchNameInput").addEventListener("update")
-    
 }
-
 // could not program a rubust event searchbar. a title will have to do.
 function renderEventSearchBar(element){
     element.innerHTML = `
