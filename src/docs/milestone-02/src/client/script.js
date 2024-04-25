@@ -37,6 +37,8 @@ window.changeView = (view, logging=true) => {
         case 3: //BOARD VIEW
             if (logging) console.log("Rendering Board View.");
             renderBoardGrid(middleDisplayBoxElement);
+        console.log("Rendering Board View.");
+            renderBoardGrid(middleDisplayBoxElement, "");
             renderBoardCreate(rightDisplayBoxElement);
             renderBoardList(leftDisplayBoxElement, true);
             break;
@@ -63,3 +65,4 @@ document.getElementById("settingsBtn").onclick = () => {
 }
 
 changeView(1,false);
+window.changeView(3);

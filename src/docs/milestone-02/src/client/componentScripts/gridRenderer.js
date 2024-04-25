@@ -5,21 +5,37 @@ import { matchStrings, renderSearchBar } from "./searchBar.js";
 
 let columns = [];
 
-export function renderFeedGrid(element, boardFilterFunc=()=>true) {
+export async function renderFeedGrid(element, boardFilterFunc=()=>true) {
     element.innerHTML = ""
-    const subscribedBoards = wrappedDB.getCurrentUser().subscribedBoards.filter(boardFilterFunc)
-    const subscribedEvents = subscribedBoards.map(boardID=>wrappedDB.getBoardEvents(boardID)).flat();
+    let subscribedBoards;
+    let subscribedEvents;
+    try{
+        subscribedBoards = (await wrappedDB.getCurrentUser()).subscribedBoards.filter(boardFilterFunc);
+        subscribedEvents = (await Promise.all(subscribedBoards.map(async (boardID)=> await wrappedDB.getBoardEvents(boardID)))).flat();
+    }
+    catch(e){
+        console.log("Something went wrong in renderFeedGrid:", e);
+        createMissing(document.getElementById("middleDisplayBox"), [], "event");
+        return;
+    }
     const gridDiv = createSearchBar(element, false);
     createGrid(gridDiv, subscribedEvents, "event");
 }
-export function renderBoardGrid(element, filterName) {
+export async function renderBoardGrid(element, filterName) {
     element.innerHTML = "";
-    const boards = wrappedDB.boards.boards;
+    let boards;
+    try{
+        boards = await wrappedDB.boards.boards;
+    }
+    catch{
+        console.log("Something went wrong in renderBoardGrid:", e)
+        createMissing(document.getElementById("leftDisplayBox"), [], "events")
+        return
+    }
 
     let filteredBoards = {}
     // filter out Boards based on filter Name
     Object.keys(boards).forEach(board => {
-        console.log(matchStrings(filterName.toLowerCase(), boards[board].name.toLowerCase()), filterName, )
         if (matchStrings(filterName.toLowerCase(), boards[board].name.toLowerCase())){
             filteredBoards[board] = boards[board];
         }
@@ -107,10 +123,15 @@ function createBoardDiv(board) {
     newBoard.classList.add("boardPost");
     newBoard.innerHTML = `<h3>${board.name}</h3><p>${board.description}</p>`;
     newBoard.appendChild(newButton)
-    newButton.addEventListener("click", (e) => {
-        const user = wrappedDB.getCurrentUser()
-        wrappedDB.subscribeUserToBoard(user._id, board._id)
-        renderBoardList(document.getElementById("leftDisplayBox"), true)
+    newButton.addEventListener("click", async (e) => {
+        try{
+            const user = await wrappedDB.getCurrentUser()
+            await wrappedDB.subscribeUserToBoard(user._id, board._id)
+            await renderBoardList(document.getElementById("leftDisplayBox"), true)
+        }
+        catch(e){
+            alert("Error posting!")
+        }
     })
     return {
         div: newBoard,

@@ -3,14 +3,14 @@
 class UserCollection {
     static nextId = 0;
     users = {}
-    addUser(name, email) {
+    async addUser(name, email) {
         let newUser = new User(name, email);
         newUser._id = UserCollection.nextId;
         UserCollection.nextId += 1;
         this.users[newUser._id] = newUser;
         return newUser._id;
     }
-    getUser(id) {return this.users[id];}
+    async getUser(id) {return this.users[id];}
 }
 class User {
     constructor(name, email) {
@@ -26,14 +26,14 @@ class User {
 class BoardCollection {
     static nextId = 0;
     boards = {}
-    addBoard(name, type, description) {
+    async addBoard(name, type, description) {
         let newBoard = new Board(name, type, description);
         newBoard._id = BoardCollection.nextId;
         BoardCollection.nextId += 1;
         this.boards[newBoard._id] = newBoard;
         return newBoard._id;
     }
-    getBoard(id) {return this.boards[id];}
+    async getBoard(id) {return this.boards[id];}
 }
 class Board {
     constructor(name, type, description) {
@@ -48,14 +48,14 @@ class Board {
 class EventCollection {
     static nextId = 0;
     events = {}
-    addEvent(author, title, description, startTime, endTime, location, board) {
+    async addEvent(author, title, description, startTime, endTime, location, board) {
         let newEvent = new Event(author, title, description, startTime, endTime, location, board);
         newEvent._id = EventCollection.nextId;
         EventCollection.nextId += 1;
         this.events[newEvent._id] = newEvent;
         return newEvent._id;
     }
-    getEvent(id) {return this.events[id];}
+    async getEvent(id) {return this.events[id];}
 }
 class Event {
     constructor(author, title, description, startTime, endTime, location, board) {
@@ -81,69 +81,69 @@ export class DataWrap {static #instance = null;
     }
 
     // ---- Current User functions ----
-    getCurrentUser() {
-        return this.users.getUser(0);
+    async getCurrentUser() {
+        return await this.users.getUser(0);
     }
 
     // ---- Creating and Manipulating ----
 
-    subscribeUserToBoard(userID, boardID) {
-        if (this.getUser(userID).subscribedBoards.includes(boardID)){return}
-        this.getUser(userID).subscribedBoards.push(boardID);
-        this.getBoard(boardID).subscribedUsers.push(userID);
+    async subscribeUserToBoard(userID, boardID) {
+        if ((await this.getUser(userID)).subscribedBoards.includes(boardID)){return}
+        (await this.getUser(userID)).subscribedBoards.push(boardID);
+        (await this.getBoard(boardID)).subscribedUsers.push(userID);
     }
 
-    unsubscribeUserFromBoard(userID, boardID){
-        const user = this.getUser(userID)
-        const board = this.getBoard(boardID)
+    async unsubscribeUserFromBoard(userID, boardID){
+        const user = await this.getUser(userID)
+        const board = await this.getBoard(boardID)
         user.subscribedBoards = user.subscribedBoards.filter(x => x !== boardID)
         board.subscribedUsers = board.subscribedUsers.filter(x => x !== userID)
     }
 
-    createNewEvent(userID, title, description, startTime, endTime, location, boardID) {
-        const newEventID = this.events.addEvent(userID, title, description, startTime, endTime, location, boardID);
-        this.getUser(userID).eventsCreated.push(newEventID);
-        this.getBoard(boardID).events.push(newEventID);
+    async createNewEvent(userID, title, description, startTime, endTime, location, boardID) {
+        const newEventID = await this.events.addEvent(userID, title, description, startTime, endTime, location, boardID);
+        (await this.getUser(userID)).eventsCreated.push(newEventID);
+        (await this.getBoard(boardID)).events.push(newEventID);
     }
     
-    createNewBoard(name, type, description){
-        const newEvent = this.boards.addBoard(name, type, description);
+    async createNewBoard(name, type, description){
+        const newEvent = await(this.boards.addBoard(name, type, description));
     }
 
     // ---- User based functions ----
-    getUser(id) {
-        return this.users.getUser(id);
+    async getUser(id) {
+        return await this.users.getUser(id);
     }
-    getUserBoards(id) {
-        return this.getUser(id).subscribedBoards.map((x)=>this.getBoard(x));
+    async getUserBoards(id) {
+        return await Promise.all((await this.getUser(id)).subscribedBoards.map(async (x)=> await this.getBoard(x)));
     }
-    getUserEvents(id) {
-        return this.getUser(id).eventsCreated.map((x)=>this.getEvent(x));
+    async getUserEvents(id) {
+        return await Promise.all((await this.getUser(id)).eventsCreated.map(async (x)=> await this.getEvent(x)));
     }
 
     // ---- Board based functions ----
-    getBoard(id) {
-        return this.boards.getBoard(id);
+    async getBoard(id) {
+        return await this.boards.getBoard(id);
     }
-    getBoardUsers(id) {
-        return this.getBoard(id).subscribedUsers.map((x)=>this.getUser(x));
+    async getBoardUsers(id) {
+        return await Promise.all((await this.getBoard(id)).subscribedUsers.map(async (x)=> await this.getUser(x)));
     }
-    getBoardEvents(id) {
-        return this.getBoard(id).events.map((x)=>this.getEvent(x));
+    async getBoardEvents(id) {
+        return  await Promise.all((await this.getBoard(id)).events.map(async (x)=>await this.getEvent(x)));
     }
-    getAllBoards (){
-        return this.boards.boards;
+    async getAllBoards (){
+        return await this.boards.boards;
     }
 
     // ---- Event based functions ----
-    getEvent(id) {
-        return this.events.getEvent(id);
+    async getEvent(id) {
+        return  await this.events.getEvent(id);
     }
-    getEventAttendees(id) {
-        return this.getEvent(id).attendees.map((x)=>this.getUser(x));
+    async getEventAttendees(id) {
+        return (await this.getEvent(id)).attendees.map((x)=>this.getUser(x));
     }
-    getEventBoard(id) {
-        return getBoard(this.getEvent(id).board);
+    async getEventBoard(id) {
+        return await getBoard((await this.getEvent(id)).board);
     }
 }
 
