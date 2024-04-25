@@ -154,10 +154,13 @@ wrappedDB.users.addUser("Pidge", "pidge@voltron.org");
 
 wrappedDB.boards.addBoard("Universal Threats 1", "Physical Activity","Robeasts that need fighting 2");
 wrappedDB.boards.addBoard("Universal Threats 2", "Physical Activity","Robeasts that need fighting 2");
+wrappedDB.boards.addBoard("CS326", "Schoolwork","Web programming with Tim Richards");
+wrappedDB.boards.addBoard("CS311", "Schoolwork", "Introduction to algorithms");
 
 wrappedDB.subscribeUserToBoard(0,0);
 wrappedDB.subscribeUserToBoard(0,1);
 wrappedDB.subscribeUserToBoard(1,0);
+wrappedDB.subscribeUserToBoard(0,2);
 
 wrappedDB.createNewEvent(0,"Goose Monster on the Loose","Dangerous activity near campus pond.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",0);
 wrappedDB.createNewEvent(0,"Ducks","J'accuse!",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",0);
@@ -168,7 +171,6 @@ wrappedDB.createNewEvent(0,"Moose","Dangerous activity near campus pond. Beware 
 wrappedDB.createNewEvent(0,"Goose Monster5 on the Loose","Sticks very effective at close range.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",0);
 wrappedDB.createNewEvent(0,"Goose Monster6 on the Loose","Dangerous activity near campus pond.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",0);
 wrappedDB.createNewEvent(0,"Goose Monster8 on the Loose","Dangerous activity near campus pond.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",1);
-wrappedDB.createNewEvent(0,"News from Goodsprings","A package courier found shot in the head near Goodsprings has reportedly regained consciousness and made a full recovery.", new Date("10-19-2281"),new Date("10-19-2281"),"Goodsprings, Nevada",1);
 wrappedDB.createNewEvent(0,"Overflow Test","Dangerous activity near campus pon.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",1);
 wrappedDB.createNewEvent(0,"Overflow Test","Dangerous activity near campus pon.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",1);
 wrappedDB.createNewEvent(0,"Overflow Test","Dangerous activity near campus pon.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",1);
@@ -176,3 +178,5 @@ wrappedDB.createNewEvent(0,"Overflow Test","Dangerous activity near campus pon."
 wrappedDB.createNewEvent(0,"Overflow Test","Dangerous activity near campus pon.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",1);
 wrappedDB.createNewEvent(0,"Overflow Test","Dangerous activity near campus pon.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",1);
 wrappedDB.createNewEvent(0,"Overflow Test","Dangerous activity near campus pon.",new Date("04-04-2024"),new Date("04-04-2024"),"Campus Pond",1);
+wrappedDB.createNewEvent(1,"326 Crunch Time!", "Join team Voltron for a last minute crunch session for the project's second milestone", new Date("04-24-2025"),new Date("04-24-2025"),"Amherst, Massachusetts", 1);
+wrappedDB.createNewEvent(1,"Cry about exam grades", "Hosting a communal waiting session as we wait in fear of exam grade releases", new Date("04-25-2025"),new Date("04-25-2025"),"Amherst, Massachusetts", 3);
