@@ -30,7 +30,7 @@ export function matchStrings(str1, str2){
 function renderBoardSearchBar(element){
     // inject all of our boxes into the specified element
     element.innerHTML = `
-        <label for="boardSearchNameInput">Name of Board:</label>
+        <label for="boardSearchNameInput">Name of Board: </label>
         <input type="text" id="boardSearchNameInput">
     `;
 
