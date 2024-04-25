@@ -5,6 +5,7 @@ import { matchStrings, renderSearchBar } from "./searchBar.js";
 
 let columns = [];
 
+// Function to render the feed grid
 export async function renderFeedGrid(element, filterName, boardFilterFunc=()=>true) {
     element.innerHTML = ""
     let subscribedBoards;
@@ -34,6 +35,7 @@ export async function renderFeedGrid(element, filterName, boardFilterFunc=()=>tr
     createGrid(gridDiv, subscribedEvents, "event");
 }
 
+// Function to render the board grid
 export async function renderBoardGrid(element, filterName) {
     element.innerHTML = "";
     let boards;
@@ -58,6 +60,7 @@ export async function renderBoardGrid(element, filterName) {
     createGrid(gridDiv, filteredBoards, "board");
 }
 
+// Function to create the search bar
 function createSearchBar(element, inBoardView) {
     element.classList.add("gridAndSearchContainer");
     const searchDiv = document.createElement("div");
@@ -74,12 +77,14 @@ function createSearchBar(element, inBoardView) {
     return gridDiv;
 }
 
+// Function to create the grid
 function createGrid(element, blocks, type) {
     if (createMissing(element, blocks, type)) return;
     createColumns(element);
     addBlocksToGrid(blocks, type);
 }
 
+// Function to create missing message if no blocks are present
 function createMissing(element, blocks, type) {
     if (blocks.length !== 0) return false;
     const noEventDiv = document.createElement("div");
@@ -89,6 +94,7 @@ function createMissing(element, blocks, type) {
     return true;
 }
 
+// Function to create columns for the grid
 function createColumns(element) {
     element.classList.add("columnsContainer");
     columns = [];
@@ -105,6 +111,7 @@ function createColumns(element) {
     }
 }
 
+// Function to add blocks to the grid
 function addBlocksToGrid(blocks, type) {
     for (let block in blocks) {
         const minHeightDiv = columns.reduce((acc, e)=>e.height < acc.height ? e : acc, columns[0]);
@@ -128,6 +135,7 @@ function createPostDiv(event) {
     }
 }
 
+// Function to create a post div for an event
 function createBoardDiv(board) {
     const newBoard = document.createElement("div");
     const newButton = document.createElement("button")

@@ -1,6 +1,7 @@
 import { wrappedDB } from "../dataWrap.js";
 import { renderFeedGrid } from "./gridRenderer.js";
 
+// Function to render the list of boards
 export async function renderBoardList(boardListElement, inBoardView) {
     boardListElement.innerHTML = "";
     const userId = (await wrappedDB.getCurrentUser())._id;
@@ -36,6 +37,7 @@ export async function renderBoardList(boardListElement, inBoardView) {
     }
 }
 
+// Function to create a list item div for a board
 function createListDiv(board){
     const newDiv = document.createElement("div");
     newDiv.classList.add("board-list-item");
@@ -43,6 +45,7 @@ function createListDiv(board){
     return newDiv;
 }
 
+// Function to create a remove button for a board
 function createRemoveBox(board, boardListElement){
     const newButton = document.createElement("button");
     newButton.type = "button";
@@ -55,6 +58,7 @@ function createRemoveBox(board, boardListElement){
     return newButton;
 }
 
+// Function to create a checkbox for a board
 function createCheckBox(board, boardListElement){
     const newCheckBox = document.createElement("input");
     newCheckBox.type = "checkbox";
