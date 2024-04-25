@@ -5,6 +5,7 @@ export async function renderEventDetails(currEvent){
 
     
     const rightDisplayBox = document.getElementById("rightDisplayBox");
+    rightDisplayBox.style = 'background-color: rgba(127, 255, 212, 0.49)';
 
     // Apply HTML.
     rightDisplayBox.innerHTML = `
@@ -40,8 +41,11 @@ export async function renderEventDetails(currEvent){
     const closeButton = document.getElementById('closeButton');
     closeButton.style.float = 'right'; 
 
-    // close out the box by rerendering event creation
-    closeButton.addEventListener("click", () => renderEventCreate(rightDisplayBox));
+    // close out the box by rerendering 
+    closeButton.addEventListener("click", () => {
+        rightDisplayBox.style = 'background-color: white';
+        renderEventCreate(rightDisplayBox);
+    });
 
     // grab the boxes
     const titleElement = document.getElementById("title");

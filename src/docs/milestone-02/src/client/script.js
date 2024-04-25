@@ -64,4 +64,4 @@ document.getElementById("settingsBtn").onclick = () => {
     changeView(4, false);
 }
 
-changeView(1, false);
+changeView(1,false);
