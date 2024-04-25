@@ -1,6 +1,12 @@
 // code for the rightHandDisplayBox of wireframe 3.
 import { wrappedDB } from "../dataWrap.js";
 
+/**
+ * Clears anything from the current element to make way for event creation.
+ *
+ * @author: Benjamin Wong
+ * @param { HTMLElement } element, the HTML element to render the event creation tab. (usually right hand side.);
+ */
 export function renderEventCreate(element) {
     // clear the content of the element. 
     element.innerHTML = "";
@@ -9,10 +15,17 @@ export function renderEventCreate(element) {
     initForm(element);
 }
 
+
+/**
+ * Displays the event creation tab, ideally on the right hand side display.
+ *
+ * @author: Benjamin Wong
+ * @param { HTMLElement } element html to render the event creation tab.
+ */
 function initForm(element) {
+    console.log(element);
 
     // inject all of our search bars and buttons to the element
-    // replicated and ugly code up the ass, but this is the best we can do if we don't want to fiddle with styles.css.
     element.innerHTML = `
     <h2> Create an Event!</h2>
     <div>Title:</div>
@@ -56,12 +69,9 @@ function initForm(element) {
 
         // check to see if the board exsits
         for (const board in wrappedDB.getAllBoards()){
-            // if the name matches up steal the boardID and set our earlier boolean to true
-            //console.log(wrappedDB.getAllBoards()[board].name);
             if (eventBoardInput.value == wrappedDB.getAllBoards()[board].name){
                 boardDoesNotExist = false;
                 boardID = board;
-                console.log("found the board!");
             }
         }
 
@@ -118,6 +128,13 @@ function initForm(element) {
     });
 }
 
+/**
+ * Helper function for proper input on dates.
+ *
+ * @author: Benjamin Wong
+ * @param { String } dateString, a string element put in by user to be tested.
+ * @return { Boolean } Boolean based on whether or not it follows correct format.
+ */
 function isValidDateFormat(dateString) {
     // regular expression for mm-dd-yyyy format
     var regex = /^(0[1-9]|1[0-2])-(0[1-9]|1\d|2\d|3[01])-(19|20)\d{2}$/;

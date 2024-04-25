@@ -2,7 +2,12 @@
 import { wrappedDB } from "../dataWrap.js";
 import { renderBoardGrid } from "./gridRenderer.js";
 
-
+/**
+ * Clears anything from the current element to make way for board creation.
+ *
+ * @author: Benjamin Wong
+ * @param { HTMLElement } element, the HTML element to render the board creation tab. (usually right hand side.);
+ */
 export function renderBoardCreate(element) {
     // clear the content of the element. 
     element.innerHTML = "";
@@ -11,6 +16,13 @@ export function renderBoardCreate(element) {
     initForm(element);
 }
 
+
+/**
+ * Display the board creation tab, ideally in the right hand side.
+ *
+ * @author: Benjamin Wong
+ * @param { HTMLElement } element, the HTML element to render the board creation tab. (usually right hand side.);
+ */
 function initForm(element) {
 
     // inject all of our search bars and buttons to the element

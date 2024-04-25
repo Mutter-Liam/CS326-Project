@@ -1,7 +1,12 @@
 // code for settings window / wireframe 04.
 import { wrappedDB } from "../dataWrap.js";
 
-
+/**
+ * Displays miscalleneous information about the current user (karma, events, email, etc.)
+ *
+ * @author: Benjamin Wong
+ * @param { HTMLElement } element, the html element we intend to display these settings to (the middle.)
+ */
 export async function renderSettings(element) {
     // clear screen's contents, as well as the grid styling that could be there. 
     element.innerHTML = "";

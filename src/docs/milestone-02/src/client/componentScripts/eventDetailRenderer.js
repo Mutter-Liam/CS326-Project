@@ -1,9 +1,15 @@
 import { wrappedDB } from "../dataWrap.js";
 import { renderEventCreate } from "./eventCreate.js";
 
+/**
+ * Displays a given event's finer details when clicked on, on the right hand side.
+ *
+ * @author: Benjamin Wong
+ * @param {Event} currEvent, the given event whose details we intend to display.
+ */
 export async function renderEventDetails(currEvent){
 
-    
+    // grab the rightDisplayBox and style it.
     const rightDisplayBox = document.getElementById("rightDisplayBox");
     rightDisplayBox.style = 'background-color: rgba(127, 255, 212, 0.49)';
 
@@ -64,7 +70,6 @@ export async function renderEventDetails(currEvent){
 
     // shove details in
     titleElement.innerHTML = currEvent.title;
-    console.log(currEvent.author);
     authorElement.innerHTML += authorDetails.username;
     karmaElement.innerHTML += authorDetails.karma;
     startTimeElement.innerHTML += currEvent.startTime;
