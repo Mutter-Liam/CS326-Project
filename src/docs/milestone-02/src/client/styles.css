@@ -23,6 +23,18 @@ body{
     height: 70px;
 }
 
+#headerIcon {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+#settings-button-container {
+    align-items: end;
+    flex-grow: 0;
+}
+
 .panelsContainer {
     display: grid;
     grid-template-columns: 15% auto 25%;
@@ -137,4 +149,24 @@ border-radius: 17px;
 
 .slider.round:before {
 border-radius: 50%;
+}
+
+#nav-button-container {
+    align-items: center;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.nav-button {
+  border: none;
+  color: white;
+  background-color: gray;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  max-width: 300px;
 }
