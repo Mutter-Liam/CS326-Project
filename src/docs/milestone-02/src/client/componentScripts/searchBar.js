@@ -14,6 +14,7 @@ export function renderSearchBar(element, inBoardView) {
 export function matchStrings(str1, str2){
     str1 = str1.replace(/\s/g, '');
     str2 = str2.replace(/\s/g, '');
+    console.log(str1, str2)
     if (str1.length === 0 || str2.length === 0) return true;
     for (let i = 0; i < str2.length - str1.length + 1; i++){
         let valid = true;
@@ -34,9 +35,6 @@ function renderBoardSearchBar(element){
         <input type="text" id="boardSearchNameInput">
     `;
 
-    // formally recognize our buttons
-    const searchButtonElement = document.getElementById("boardSearchButton");
-    const clearButtonElement = document.getElementById("boardSearchClearButton");
     const middleDisplayBoxElement = document.getElementById("middleDisplayBox");
     
     // do light styling on the element.
@@ -66,12 +64,22 @@ function renderBoardSearchBar(element){
 }
 // could not program a rubust event searchbar. a title will have to do.
 function renderEventSearchBar(element){
-    element.innerHTML = `
-    <h1>Events View</h1>
-    `;
+
     element.style.textAlign = "center";
     element.style.display = "flex";
     element.style.justifyContent = "center";
     element.style.alignItems = "center";
-}
+    element.innerHTML = `
+    <label for="eventSearchNameInput">Name of Event: </label>
+    <input type="text" id="eventSearchNameInput">
+`;
+
+    const middleDisplayBoxElement = document.getElementById("middleDisplayBox");
+
+    // do light styling on the element.
+    element.style.textAlign = "center";
+    element.style.display = "flex";
+    element.style.justifyContent = "center";
+    element.style.alignItems = "center";
+    }
 

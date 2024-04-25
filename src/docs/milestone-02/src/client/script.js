@@ -23,9 +23,10 @@ window.changeView = (view, logging=true) => {
     switch (view) {
         case 1: // FEED VIEW
             if (logging) console.log("Rendering Feed View.");
-            renderEventCreate(rightDisplayBoxElement);
-            renderFeedGrid(middleDisplayBoxElement);
-            renderBoardList(leftDisplayBoxElement, false);
+            renderEventCreate(rightDisplayBoxElement)
+            renderFeedGrid(middleDisplayBoxElement, "").then(e =>{
+                renderBoardList(leftDisplayBoxElement, false);
+            });
             
             break;
         case 2: // MAP VIEW
@@ -64,4 +65,4 @@ document.getElementById("settingsBtn").onclick = () => {
     changeView(4, false);
 }
 
-changeView(1,false);
+changeView(2,false);

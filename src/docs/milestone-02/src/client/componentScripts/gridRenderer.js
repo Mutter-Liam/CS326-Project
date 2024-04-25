@@ -5,7 +5,7 @@ import { matchStrings, renderSearchBar } from "./searchBar.js";
 
 let columns = [];
 
-export async function renderFeedGrid(element, boardFilterFunc=()=>true) {
+export async function renderFeedGrid(element, filterName, boardFilterFunc=()=>true) {
     element.innerHTML = ""
     let subscribedBoards;
     let subscribedEvents;
@@ -19,8 +19,21 @@ export async function renderFeedGrid(element, boardFilterFunc=()=>true) {
         return;
     }
     const gridDiv = createSearchBar(element, false);
+    const middleDisplayBoxElement = document.getElementById("middleDisplayBox")
+    const searchInput = document.getElementById("eventSearchNameInput")
+    searchInput.addEventListener("input", async (e) => {
+        const input = document.getElementById("eventSearchNameInput").value
+        await renderFeedGrid(middleDisplayBoxElement, input, boardFilterFunc)
+        document.getElementById("eventSearchNameInput").value = input
+        document.getElementById("eventSearchNameInput").focus()
+    });
+
+    subscribedEvents = subscribedEvents.filter((event) => {
+        return (matchStrings(filterName, event.title.toLowerCase()) || matchStrings(filterName, event.description.toLowerCase())) 
+    })
     createGrid(gridDiv, subscribedEvents, "event");
 }
+
 export async function renderBoardGrid(element, filterName) {
     element.innerHTML = "";
     let boards;
