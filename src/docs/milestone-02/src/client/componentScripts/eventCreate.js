@@ -125,3 +125,4 @@ function isValidDateFormat(dateString) {
     // test the string against the regular expression
     return regex.test(dateString);
 }
+

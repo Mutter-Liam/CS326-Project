@@ -49,4 +49,6 @@ window.changeView = (view) => {
     return true;
 }
 
-window.changeView(3);
+  
+
+window.changeView(1);
