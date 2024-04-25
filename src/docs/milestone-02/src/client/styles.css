@@ -1,0 +1,310 @@
+html{
+    font-family: sans-serif;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    height: 100%;
+}
+
+body{
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+#headerBar {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    border: 0px;
+    min-height: 70px;
+}
+
+#headerIcon {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+#settings-button-container {
+    align-items: end;
+    flex-grow: 0;
+}
+
+.panelsContainer {
+    display: grid;
+    grid-template-columns: 15% auto 25%;
+    flex-grow: 1;
+    min-height: 100%;
+    overflow: hidden;
+}
+
+.gridAndSearchContainer {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.searchbar {
+    height: 60px;
+    flex-grow: 0;
+}
+
+.columnsContainer {
+    border: solid;
+    border-color: rgb(180, 179, 179);
+    margin: 5px;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    overflow-y: scroll;
+    flex-grow: 1;
+}
+
+.panel {
+    text-align: center;
+    border-style: solid;
+    border-color: rgb(180, 179, 179);
+    border-radius: 10px;
+    margin: 5px;
+    padding: 2px;
+}
+
+#rightDisplayBox {
+    overflow-y: scroll;
+}
+
+#leftDisplayBox {
+    overflow-y: scroll;
+}
+
+.feedPost {
+    background-color: aquamarine;
+    padding: 5px;
+    margin: 10px;
+    border: solid;
+    border-color: rgb(180, 179, 179);
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.feedPost:hover {
+    background-color: rgb(26, 244, 171);
+    transform: translateY(-5px);
+}
+
+.boardPost {
+    background-color:rgb(255, 181, 92);
+    padding: 5px;
+    margin: 10px;
+    border: solid;
+    border-color: rgb(180, 179, 179);
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.boardPost:hover {
+    background-color: rgb(255, 150, 21);
+    transform: translateY(-5px);
+}
+
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+/* The slider */
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 14px;
+width: 13px;
+left: 2px;
+bottom: 2px;
+background-color: white;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+input:checked + .slider {
+background-color: #2196F3;
+}
+
+input:focus + .slider {
+box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+-webkit-transform: translateX(13px);
+-ms-transform: translateX(13px);
+transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.slider.round {
+border-radius: 17px;
+}
+
+.slider.round:before {
+border-radius: 50%;
+}
+
+.remove-button {
+    background-color: rgb(255, 181, 92);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 10px;
+    border: 0px;
+    padding: 7.5px 15px;
+    font-size: 10pt;
+
+}
+
+.remove-button:hover {
+    background-color: rgb(255, 92, 92);
+    transform: translateY(-2px);
+    
+
+}
+
+#boardPublishButton {
+    background-color: rgb(255, 181, 92);
+    border: 0px;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: 15pt;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#boardPublishButton:hover {
+    background-color:rgb(255, 152, 25); 
+    transform: translateY(-5px);
+}
+
+#eventBroadcastButton {
+    background-color: aquamarine;
+    border: 0px;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: 15pt;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#eventBroadcastButton:hover {
+    background-color: rgb(26, 244, 171);; 
+    transform: translateY(-5px);
+
+}
+
+#attendButton {
+    background-color: rgb(255, 181, 92);
+    border: 0px;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: 15pt;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#attendButton:hover {
+    background-color:rgb(255, 152, 25); 
+    transform: translateY(-5px);
+}
+
+#attendButton {
+    background-color: aquamarine;
+    border: 0px;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: 15pt;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#attendButton:hover {
+    background-color: rgb(26, 244, 171);; 
+    transform: translateY(-5px);
+
+}
+
+#nav-button-container {
+    display: flex;
+    justify-content: center; /* Center the items horizontally */
+}
+
+
+.nav-button {
+  border: none;
+  border-radius: 20px;
+  color: white;
+  background-color: gray;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 50px;
+  cursor: pointer;
+  
+  flex-grow: 1;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: rgb(176, 176, 176); 
+    transform: translateY(-5px);
+}
+
+.boardPost button {
+    background-color: rgb(255, 255, 255);
+    padding: 10px 15px;
+    font-size: 15pt; 
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.boardPost button:hover {
+    background-color: rgb(45, 192, 45);
+}
+
+@keyframes spinAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#headerIcon img:hover {
+    animation: spinAnimation 1s linear infinite;
+}

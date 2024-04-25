@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendezvous</title>
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- JavaScript Files -->
+    <script type="module" src="script.js" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxZuwtATr27JaXXZj3aJ7WrIv4agVHrco" async defer></script>
+
+</head>
+<body>
+    <div class="panel" id="headerBar"></div>
+    <div id="nav-button-container">
+        <button class="nav-button" id="feedBtn">Feed</button>
+        <button class="nav-button" id="mapBtn">Map</button>
+        <button class="nav-button" id="boardsBtn">Boards</button>
+    </div>
+    <div class="panelsContainer">
+        <div class="panel grid-item" id="leftDisplayBox"></div>
+        <div class="panel grid-item" id="middleDisplayBox"></div>
+        <div class="panel grid-item" id="rightDisplayBox"></div>
+    </div>
+</body>
+</html>
