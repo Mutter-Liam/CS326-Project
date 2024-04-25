@@ -29,7 +29,7 @@ export async function renderFeedGrid(element, filterName, boardFilterFunc=()=>tr
     });
 
     subscribedEvents = subscribedEvents.filter((event) => {
-        return (matchStrings(filterName, event.title.toLowerCase()) || matchStrings(filterName, event.description.toLowerCase())) 
+        return (matchStrings(filterName.toLowerCase(), event.title.toLowerCase()) || matchStrings(filterName.totoLowerCase(), event.description.toLowerCase())) 
     })
     createGrid(gridDiv, subscribedEvents, "event");
 }
