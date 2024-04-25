@@ -90,7 +90,7 @@ body{
 }
 
 .boardPost {
-    background-color:rgb(158, 220, 199);
+    background-color:rgb(255, 181, 92);
     padding: 5px;
     margin: 10px;
     border: solid;
@@ -100,7 +100,7 @@ body{
 }
 
 .boardPost:hover {
-    background-color: rgb(100, 220, 180); 
+    background-color: rgb(255, 150, 21);
     transform: translateY(-5px);
 }
 
@@ -174,11 +174,24 @@ border-radius: 50%;
 }
 
 .remove-button {
-    background-color: rgb(191, 221, 211);
+    background-color: rgb(255, 181, 92);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 10px;
+    border: 0px;
+    padding: 7.5px 15px;
+    font-size: 10pt;
+
+}
+
+.remove-button:hover {
+    background-color: rgb(255, 92, 92);
+    transform: translateY(-2px);
+    
+
 }
 
 #boardPublishButton {
-    background-color: rgb(191, 221, 211);
+    background-color: rgb(255, 181, 92);
     border: 0px;
     border-radius: 10px;
     padding: 15px 30px;
@@ -187,7 +200,7 @@ border-radius: 50%;
 }
 
 #boardPublishButton:hover {
-    background-color: rgb(100, 220, 180); 
+    background-color:rgb(255, 152, 25); 
     transform: translateY(-5px);
 }
 
@@ -230,4 +243,15 @@ border-radius: 50%;
 .nav-button:hover {
     background-color: rgb(176, 176, 176); 
     transform: translateY(-5px);
+}
+
+.boardPost button {
+    background-color: rgb(255, 255, 255);
+    padding: 10px 15px;
+    font-size: 15pt; 
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.boardPost button:hover {
+    background-color: rgb(45, 192, 45);
 }
