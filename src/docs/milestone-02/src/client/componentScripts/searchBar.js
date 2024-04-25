@@ -14,7 +14,7 @@ export function renderSearchBar(element, inBoardView) {
 export function matchStrings(str1, str2){
     str1 = str1.replace(/\s/g, '');
     str2 = str2.replace(/\s/g, '');
-    console.log(str1, str2)
+    //console.log(str1, str2)
     if (str1.length === 0 || str2.length === 0) return true;
     for (let i = 0; i < str2.length - str1.length + 1; i++){
         let valid = true;
