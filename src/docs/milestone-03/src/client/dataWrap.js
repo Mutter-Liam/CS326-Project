@@ -1,5 +1,42 @@
 // Class for interfacing with the backend
 
+async function postData(url = "", data = {}) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+}
+
+async function putData(url = "", data = {}) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+}
+
+
 class UserCollection {
     static nextId = 0;
     users = {}
@@ -88,26 +125,20 @@ export class DataWrap {static #instance = null;
     // ---- Creating and Manipulating ----
 
     async subscribeUserToBoard(userID, boardID) {
-        if ((await this.getUser(userID)).subscribedBoards.includes(boardID)){return}
-        (await this.getUser(userID)).subscribedBoards.push(boardID);
-        (await this.getBoard(boardID)).subscribedUsers.push(userID);
+        await putData('/subscribe-to-board', {"user": userID, "board": boardID})
     }
 
     async unsubscribeUserFromBoard(userID, boardID){
-        const user = await this.getUser(userID)
-        const board = await this.getBoard(boardID)
-        user.subscribedBoards = user.subscribedBoards.filter(x => x !== boardID)
-        board.subscribedUsers = board.subscribedUsers.filter(x => x !== userID)
+        await putData('/unsubscribe-to-board', {"user": userID, "board": boardID})
     }
 
     async createNewEvent(userID, title, description, startTime, endTime, location, boardID) {
-        const newEventID = await this.events.addEvent(userID, title, description, startTime, endTime, location, boardID);
-        (await this.getUser(userID)).eventsCreated.push(newEventID);
-        (await this.getBoard(boardID)).events.push(newEventID);
+        const data = {"user": userID, "title": title, "description":description, "startTime":startTime, "endTime":endTime, "location":location, "board": boardID}
+        await postData('/create-new-event', data)
     }
     
     async createNewBoard(name, type, description){
-        const newEvent = await(this.boards.addBoard(name, type, description));
+        await postData('/create-new-board', {"name":name, "type":type, "description":description})
     }
 
     // ---- User based functions ----
@@ -115,35 +146,40 @@ export class DataWrap {static #instance = null;
         return await this.users.getUser(id);
     }
     async getUserBoards(id) {
-        return await Promise.all((await this.getUser(id)).subscribedBoards.map(async (x)=> await this.getBoard(x)));
+        return await postData('/get-user-boards',{"user": id})
     }
     async getUserEvents(id) {
-        return await Promise.all((await this.getUser(id)).eventsCreated.map(async (x)=> await this.getEvent(x)));
+        return await postData('/get-user-events',{"user": id})
     }
 
     // ---- Board based functions ----
     async getBoard(id) {
-        return await this.boards.getBoard(id);
+        return await postData('/get-board',{"board": id})
     }
     async getBoardUsers(id) {
-        return await Promise.all((await this.getBoard(id)).subscribedUsers.map(async (x)=> await this.getUser(x)));
+        return await postData('/get-board-users',{"board": id})
     }
     async getBoardEvents(id) {
-        return  await Promise.all((await this.getBoard(id)).events.map(async (x)=>await this.getEvent(x)));
+        return await postData('/get-board-events',{"board": id})
     }
     async getAllBoards (){
-        return await this.boards.boards;
+        return await fetch('/get-all-boards').then(r =>{
+            if (r.ok){
+                return r.json()
+            }
+            return Promise.reject(new Error("Could not fetch all boards"))
+        })
     }
 
     // ---- Event based functions ----
     async getEvent(id) {
-        return  await this.events.getEvent(id);
+        return await postData('/get-event',{"event": id})
     }
     async getEventAttendees(id) {
-        return (await this.getEvent(id)).attendees.map((x)=>this.getUser(x));
+        return await postData('/get-event-attendees',{"event": id})
     }
     async getEventBoard(id) {
-        return await getBoard((await this.getEvent(id)).board);
+        return await postData('/get-event-board',{"event": id})
     }
 }
 
