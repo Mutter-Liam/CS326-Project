@@ -12,7 +12,7 @@ const PORT = 3260;
 // TODO GET Route => returns something
 // retrieve event information, possibly specifying some or just all of them depending on how our frontend works.
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Hello World!');
 });
 
 // TODO POST Route => creates something

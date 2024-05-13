@@ -2,75 +2,12 @@ import PouchDB from "pouchdb";
 
 // Pouch DB docs here: https://pouchdb.com/
 
-// define some classes so that our operations are a bit less confusing
-class UserCollection {
-  static nextId = 0;
-  users = {}
-  async addUser(name, email) {
-      let newUser = new User(name, email);
-      newUser._id = UserCollection.nextId;
-      UserCollection.nextId += 1;
-      this.users[newUser._id] = newUser;
-      return newUser._id;
-  }
-  async getUser(id) {return this.users[id];}
-}
-class User {
-  constructor(name, email) {
-      this.username = name;
-      this.email = email;
-      this.karma = 0;
-      this.subscribedBoards = [];
-      this.eventsCreated = [];
-      this.eventsAttending = [];
-  }
-}
+const EVENTS = "events"
+const USERS = "users"
+const BOARDS = "boards"
 
-class BoardCollection {
-  static nextId = 0;
-  boards = {}
-  async addBoard(name, type, description) {
-      let newBoard = new Board(name, type, description);
-      newBoard._id = BoardCollection.nextId;
-      BoardCollection.nextId += 1;
-      this.boards[newBoard._id] = newBoard;
-      return newBoard._id;
-  }
-  async getBoard(id) {return this.boards[id];}
-}
-class Board {
-  constructor(name, type, description) {
-      this.name = name;
-      this.type = type;
-      this.description = description;
-      this.subscribedUsers = [];
-      this.events = [];
-  }
-}
-
-class EventCollection {
-  static nextId = 0;
-  events = {}
-  async addEvent(author, title, description, startTime, endTime, location, board) {
-      let newEvent = new Event(author, title, description, startTime, endTime, location, board);
-      newEvent._id = EventCollection.nextId;
-      EventCollection.nextId += 1;
-      this.events[newEvent._id] = newEvent;
-      return newEvent._id;
-  }
-  async getEvent(id) {return this.events[id];}
-}
-class Event {
-  constructor(author, title, description, startTime, endTime, location, board) {
-      this.author = author;
-      this.title = title;
-      this.description = description;
-      this.startTime = startTime;
-      this.endTime = endTime;
-      this.location = location;
-      this.board = board;
-  }
-}
+const OK = "ok"
+const ERROR = "error"
 
 /**
  * Initializes a PouchDB database with specified collections if they do not
@@ -80,38 +17,37 @@ class Event {
  * attempts to retrieve collections for 'events', 'boards', and 'users'. If these
  * collections do not exist, it creates them with initial empty arrays.
  *
- * @param {string} dbname - The name of the database to initialize.
  */
-const initdb = async (dbname) => {
+const initDB = async () => {
   // Initialize the database if it doesn't exist
-  const db = new PouchDB(dbname);
-
-
-  // TODO: MAKE ALL OF THESE COLLECTIONS, YOU FUCKING IDIOT
-  // Get the events collection If it doesn't exist, create it.
-  try {
-    const events = await db.get("events");
-  } catch (e) {
-    await db.put({ _id: "events", events: [] });
-  }
-
-  // Get the events collection If it doesn't exist, create it.
-  try {
-    const boards = await db.get("boards");
-  } catch (e) {
-    await db.put({ _id: "boards", boards: [] });
-  }
-
-  // Get the events collection If it doesn't exist, create it.
-  try {
-    const users = await db.get("users");
-  } catch (e) {
-    await db.put({ _id: "users", users: [] });
-  }
-  
-  // Close the database connection
-  await db.close();
+  const events = new PouchDB(EVENTS);
+  await events.close();
+  const users = new PouchDB(USERS);
+  await users.close();
+  const boards = new PouchDB(BOARDS);
+  await boards.close();
 };
+
+const tryOp = (f) => {
+  try {
+    const result = f();
+    return {status: OK, data: result};
+  } catch (e) {
+    return {status: ERROR, error:e};
+  }
+}
+
+let nextIDs = {
+  [EVENTS]: 0,
+  [USERS]: 0,
+  [BOARDS]: 0
+}
+
+const nextId = (collection) => {
+  const newID = nextIDs[collection];
+  nextIDs[collection] += 1;
+  return newID;
+}
 
 /**
  * Factory function to create a database instance using PouchDB for managing
@@ -122,19 +58,18 @@ const initdb = async (dbname) => {
  * The database is re-instantiated with each method call to
  * ensure that the most recent data is used.
  *
- * @param {string} dbname - The name of the database to initialize and use.
  * @returns {object} An object containing methods to interact with the database
  */
-const Database = async (dbname) => {
+const Database = async () => {
   // Initialize the database
-  await initdb(dbname);
+  await initDB();
 
   /**
    * Helper function to create a new PouchDB instance.
    * @returns {PouchDB} A new PouchDB instance connected to the specified
-   * database.
+   * collection.
    */
-  const getDB = () => new PouchDB(dbname);
+  const getCollection = (collection) => new PouchDB(collection);
 
   const obj = {
 
@@ -147,6 +82,12 @@ const Database = async (dbname) => {
      * @param { Integer } ID, the ID number of the requested board.
      * @return { Promise } That resolves to the event and its data if it is found, or an error informing otherwise.
      */
+    getEventByID: (ID) => {
+      const eventsCollection = getCollection(EVENTS);
+      const result = tryOp(()=>eventsCollection.get(ID));
+      eventsCollection.close();
+      return result;
+    },
 
 
     /**
@@ -158,6 +99,12 @@ const Database = async (dbname) => {
      * @param { Integer } ID, the ID number of the requested board.
      * @return { Promise } That resolves to the board and its data if it is found, or an error informing otherwise.
      */
+    getBoardByID: (ID) => {
+      const boardsCollection = getCollection(BOARDS);
+      const result = tryOp(()=>boardsCollection.get(ID));
+      boardsCollection.close();
+      return result;
+    },
 
 
     /**
@@ -169,6 +116,12 @@ const Database = async (dbname) => {
      * @param { Integer } ID, the ID number of the requested board.
      * @return { Promise } That resolves to the user and its data if it is found, or an error informing otherwise.
      */
+    getUserByID: (ID) => {
+      const usersCollection = getCollection(USERS);
+      const result = tryOp(()=>usersCollection.get(ID));
+      usersCollection.close();
+      return result;
+    },
     
     /**
      * getAllEvents
@@ -178,26 +131,11 @@ const Database = async (dbname) => {
      * @author: Benjamin Wong
      * @return { Promise } That resolves to a list of all events, or an error informing otherwise.
      */
-    getAllEvents: async () => {W
-      try {
-        const db = getDB();
-
-        // grab events from our database
-        const data = await db.get("events");
-
-        // close the database
-        await db.close();
-
-        // return retrieved info
-        return { status: "success", data: data };
-      } catch (e) {
-        // error handling (return message and inform we couldnt)
-        return {
-          status: "error",
-          message: "Failed to retrieve events.",
-          error: e.message,
-        };
-      }
+    getAllEvents: (options) => {
+      const eventsCollection = getCollection(EVENTS);
+      const result = tryOp(()=>eventsCollection.allDocs(options));
+      eventsCollection.close();
+      return result;
     },
 
 
@@ -209,16 +147,28 @@ const Database = async (dbname) => {
      * @author: Benjamin Wong
      * @return { Promise } That resolves to a list of all boards, or an error informing otherwise.
      */
+    getAllBoards: (options) => {
+      const boardsCollection = getCollection(BOARDS);
+      const result = tryOp(()=>boardsCollection.allDocs(options));
+      boardsCollection.close();
+      return result;
+    },
 
 
     /**
-     * getAllEvents
+     * getAllUsers
      * 
      * Returns all users upon request.
      *
      * @author: Benjamin Wong
      * @return { Promise } That resolves to a list of all users, or an error informing otherwise.
      */
+    getAllUsers: (options) => {
+      const usersCollection = getCollection(USERS);
+      const result = tryOp(()=>usersCollection.allDocs(options));
+      usersCollection.close();
+      return result;
+    },
 
     /**
      * createEvent
@@ -229,6 +179,27 @@ const Database = async (dbname) => {
      * @param { Event } event, an event class with correct details.
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
+    createEvent: (event) => {
+      const eventsCollection = getCollection(EVENTS);
+      const result = tryOp(()=>{
+        const newID = nextId(EVENTS);
+        const doc = {
+          _id: newID,
+          author: event.author,
+          title: event.title,
+          description: event.description,
+          startTime: event.startTime,
+          endTime: event.endTime,
+          location: event.location,
+          board: event.board,
+          attendees: []
+        }
+        eventsCollection.put(doc);
+        return newID;
+      });
+      eventsCollection.close();
+      return result;
+    },
 
     /**
      * createBoard
@@ -239,6 +210,53 @@ const Database = async (dbname) => {
      * @param { Board } board, an event class with correct details.
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
+    createBoard: (board) => {
+      const boardsCollection = getCollection(BOARDS);
+      const result = tryOp(()=>{
+        const newID = nextId(BOARDS);
+        const doc = {
+          _id: newID,
+          name: board.name,
+          type: board.type,
+          description: board.description,
+          subscribedUsers: [],
+          events: []
+        }
+        boardsCollection.put(doc);
+        return newID;
+      });
+      boardsCollection.close();
+      return result;
+    },
+
+    /**
+     * createUser
+     * 
+     * Given the requisite info, creates a new board and adds it to the database
+     *
+     * @author: Benjamin Wong
+     * @param { User } user, an event class with correct details.
+     * @return { Promise } That resolves an indication of success or error otherwise.
+     */
+    createUser: (user) => {
+      const usersCollection = getCollection(USERS);
+      const result = tryOp(()=>{
+        const newID = nextId(USERS);
+        const doc = {
+          _id: newID,
+          username: user.name,
+          email: user.email,
+          karma: 0,
+          subscribedBoards : [],
+          eventsCreated: [],
+          eventsAttending: []
+        }
+        usersCollection.put(doc);
+        return newID;
+      });
+      usersCollection.close();
+      return result;
+    },
 
     /**
      * deleteEvent
@@ -246,9 +264,19 @@ const Database = async (dbname) => {
      * Given the requisite info, deletes an event with the specified ID from the database.
      *
      * @author: Benjamin Wong
-     * @param { Integer } eventID, the ID of the event to be deleted.
+     * @param { Integer } ID, the ID of the event to be deleted.
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
+    deleteEvent: async (ID) => {
+      const eventsCollection = getCollection(EVENTS);
+      const result = tryOp(async ()=>{
+        doc = await eventsCollection.get(ID);
+        eventsCollection.remove(doc);
+      });
+      eventsCollection.close();
+      return result;
+    },
+    
 
     /**
      * attendEvent
@@ -257,9 +285,23 @@ const Database = async (dbname) => {
      *
      * @author: Benjamin Wong
      * @param { Integer } eventID, the ID of the event to attend
-     * @param { User } userID, the user to attend this event
+     * @param { Integer } userID, the user to attend this event
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
+    attendEvent: async (eventID, userID) => {
+      const eventsCollection = getCollection(EVENTS);
+      const usersCollection = getCollection(USERS);
+      const result = tryOp(async ()=>{
+        const event = await eventsCollection.get(eventID);
+        const user = await usersCollection.get(userID);
+        event.attendees.push(userID);
+        user.eventsAttending.push(eventID);
+        return 'Success';
+      });
+      eventsCollection.close();
+      usersCollection.close();
+      return result;
+    },
 
 
     /**
@@ -269,9 +311,23 @@ const Database = async (dbname) => {
      *
      * @author: Benjamin Wong
      * @param { Integer } boardID , the ID of the event to follow
-     * @param { User } userID, the user to follow this board
+     * @param { Integer } userID, the user to follow this board
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
+    addBoard: async (boardID, userID) => {
+      const boardsCollection = getCollection(BOARDS);
+      const usersCollection = getCollection(USERS);
+      const result = tryOp(async ()=>{
+        const board = await boardsCollection.get(boardID);
+        const user = await usersCollection.get(userID);
+        board.subscribedUsers.push(userID);
+        user.subscribedBoards.push(boardID);
+        return 'Success';
+      });
+      boardsCollection.close();
+      usersCollection.close();
+      return result;
+    },
 
     /**
      * unattendEvent
@@ -280,9 +336,23 @@ const Database = async (dbname) => {
      *
      * @author: Benjamin Wong
      * @param { Integer } eventID, the ID of the event to stop attending
-     * @param { User } userID, the user to unattend this event
+     * @param { Integer } userID, the user to unattend this event
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
+    unattendEvent: async (eventID, userID) => {
+      const eventsCollection = getCollection(EVENTS);
+      const usersCollection = getCollection(USERS);
+      const result = tryOp(async ()=>{
+        const event = await eventsCollection.get(eventID);
+        const user = await usersCollection.get(userID);
+        event.attendees.remove(userID);
+        user.eventsAttending.remove(eventID);
+        return 'Success';
+      });
+      eventsCollection.close();
+      usersCollection.close();
+      return result;
+    },
 
 
     /**
@@ -292,9 +362,23 @@ const Database = async (dbname) => {
      *
      * @author: Benjamin Wong
      * @param { Integer } boardID , the ID of the event to unfollow
-     * @param { User } userID, the user to unfollow this board
+     * @param { Integer } userID, the user to unfollow this board
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
+    unfollowBoard: async (boardID, userID) => {
+      const boardsCollection = getCollection(BOARDS);
+      const usersCollection = getCollection(USERS);
+      const result = tryOp(async ()=>{
+        const board = await boardsCollection.get(boardID);
+        const user = await usersCollection.get(userID);
+        board.subscribedUsers.remove(userID);
+        user.subscribedBoards.remove(boardID);
+        return 'Success';
+      });
+      boardsCollection.close();
+      usersCollection.close();
+      return result;
+    },
 
     /**
      * deleteBoard
@@ -305,6 +389,15 @@ const Database = async (dbname) => {
      * @param { Integer } eventID, the ID of the event to delete
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
+    deleteBoard: async (ID) => {
+      const boardsCollection = getCollection(BOARDS);
+      const result = tryOp(async ()=>{
+        doc = await boardsCollection.get(ID);
+        boardsCollection.remove(doc);
+      });
+      boardsCollection.close();
+      return result;
+    },
 
 
 
