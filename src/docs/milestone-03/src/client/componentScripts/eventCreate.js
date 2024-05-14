@@ -15,7 +15,6 @@ export function renderEventCreate(element) {
     initForm(element);
 }
 
-
 /**
  * Displays the event creation tab, ideally on the right hand side display.
  *

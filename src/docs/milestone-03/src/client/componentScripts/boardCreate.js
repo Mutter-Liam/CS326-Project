@@ -8,7 +8,7 @@ import { renderBoardGrid } from "./gridRenderer.js";
  * @author: Benjamin Wong
  * @param { HTMLElement } element, the HTML element to render the board creation tab. (usually right hand side.);
  */
-export function renderBoardCreate(element) {
+export async function renderBoardCreate(element) {
     // clear the content of the element. 
     element.innerHTML = "";
 
@@ -69,7 +69,7 @@ function initForm(element) {
     const messageBoxElement = document.getElementById("messageBox");
 
     // Add event listener for the publish button
-    publishButton.addEventListener("click", function () {
+    publishButton.addEventListener("click", async function () {
         // if one of the input boxes are blank abort publish and alert user
         if (!nameInput.value || !typeInput.value || !descriptionInput.value) {
             messageBoxElement.innerHTML = "One of the boxes are empty!";
@@ -80,10 +80,22 @@ function initForm(element) {
             }, 5000);
         }
         else{
-            // create the new board
-            wrappedDB.createNewBoard(nameInput.value, typeInput.value, descriptionInput.value);
-            
+            // contact the database to create new board.
+            try{
+                await wrappedDB.createNewBoard(nameInput.value, typeInput.value, descriptionInput.value);
+            } catch(e){
+                // inform user there was an error
+                messageBoxElement.innerHTML = "There was an error attempting to create the board.";
 
+                // autoclear said message after 5 seconds
+                setTimeout(function() {
+                    messageBoxElement.innerHTML = "";
+                }, 5000);
+
+                //terminate early
+                return;
+            }
+            
             // rerender our boards now that we have a new board we can show. 
             let middleDisplayBoxElement = document.getElementById("middleDisplayBox");
             middleDisplayBoxElement.innerHTML = "";
@@ -97,5 +109,6 @@ function initForm(element) {
                 messageBoxElement.innerHTML = "";
             }, 5000);
         }
+        return;
     });
 }
