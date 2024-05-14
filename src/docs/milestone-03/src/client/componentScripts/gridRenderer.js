@@ -8,7 +8,7 @@ let columns = [];
 export async function renderFeedGrid(element, filterName, boardFilterFunc=()=>true) {
     element.innerHTML = ""
     let subscribedBoards = (await wrappedDB.getUserBoards()).filter(boardFilterFunc);
-    let subscribedEvents = (await Promise.all(subscribedBoards.map(async b => await wrappedDB.getBoardEvents(b)))).flat();
+    let subscribedEvents = (await Promise.all(subscribedBoards.map(async b => await wrappedDB.getBoardEvents(b._id)))).flat();
     const gridDiv = createSearchBar(element, false);
     const middleDisplayBoxElement = document.getElementById("middleDisplayBox")
     const searchInput = document.getElementById("eventSearchNameInput")
@@ -139,8 +139,11 @@ function createBoardDiv(board) {
     newBoard.appendChild(newButton)
     newButton.addEventListener("click", async (e) => {
         try{
+            console.log("A");
             await wrappedDB.subscribeUserToBoard(board._id);
+            console.log("B");
             await boardListUpdater();
+            console.log("C");
         }
         catch(e){
             alert("Failed to Subscribe!")

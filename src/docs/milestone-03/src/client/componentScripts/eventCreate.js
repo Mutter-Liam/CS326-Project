@@ -21,7 +21,7 @@ export function renderEventCreate(element) {
  * @author: Benjamin Wong
  * @param { HTMLElement } element html to render the event creation tab.
  */
-function initForm(element) {
+async function initForm(element) {
 
     // inject all of our search bars and buttons to the element
     element.innerHTML = `
@@ -30,7 +30,8 @@ function initForm(element) {
     <div><input type="text" id="eventCreateTitleInput"></div><br>
 
     <div>Course/Board:</div>
-    <div><input type="text" id="eventBoardInput"></div><br>
+    <div><select id="eventBoardInput"><select>
+    <br>
 
     <div>Location:</div>
     <div><input type="text" id="eventCreateLocationInput"></div><br>
@@ -59,32 +60,21 @@ function initForm(element) {
     const descriptionInput = document.getElementById("eventCreateDescriptionInput");
     const messageBoxElement = document.getElementById("messageBox");
 
+
+    // add Dropdown list for board property of the event to be created
+    // derirved by the baords the current user is subscribed to. 
+    const userBoards = await wrappedDB.getUserBoards();
+
+    // add every board the user is subscribed to as the options to put under
+    // key is its name, value is its id for the eventual fetch request.
+    for (const currIndex in userBoards){
+        eventBoardInput.options[eventBoardInput.options.length] = new Option(userBoards[currIndex].name, userBoards[currIndex]._id);
+    }
+
     // Add event listener for the broadcast button
-    broadCastButton.addEventListener("click", function () {
-        // little variables for board checking
-        let boardDoesNotExist = true;
-        let boardID = null;
-
-        // check to see if the board exsits
-        for (const board in wrappedDB.getAllBoards()){
-            if (eventBoardInput.value == wrappedDB.getAllBoards()[board].name){
-                boardDoesNotExist = false;
-                boardID = board;
-            }
-        }
-
-        // did the boardInput actually correlate to a real board?
-        if (boardDoesNotExist){
-            // inform the user to create input correctly.
-            messageBoxElement.innerHTML = "It looks like the board/topic doesn't exist. Try making it yourself!";
-
-            // hide the message after 5 seconds
-            setTimeout(function() {
-                messageBoxElement.innerHTML = "";
-            }, 4000);
-        }
+    broadCastButton.addEventListener("click", async function () {
         // if one of the input boxes are blank abort publish and alert user
-        else if (!titleInput.value || !locationInput.value || !startInput || !endInput || !descriptionInput.value || !eventBoardInput.value) {
+        if (!titleInput.value || !locationInput.value || !startInput || !endInput || !descriptionInput.value || !eventBoardInput.value) {
             // inform the user to create input correctly.
             messageBoxElement.innerHTML = "One of the boxes are empty!";
 
@@ -105,18 +95,20 @@ function initForm(element) {
         } 
         // else this is a valid input, go and create
         else{
-            // else create a new board and inform user 
-            const userID = wrappedDB.getCurrentUser()._id;
 
-            // wrappedDB.createNewEvent(userID, titleInput.value, descriptionInput.value, startInput, endInput, locationInput.value, eventBoardInput);
-            wrappedDB.createNewEvent(titleInput.value, descriptionInput.value, new Date(startInput.value), new Date(endInput.value), locationInput.value, boardID);
+            console.log(eventBoardInput.value);
+
+            console.log(titleInput.value, descriptionInput.value, new Date(startInput.value), new Date(endInput.value), locationInput.value, eventBoardInput.value);
+
+            // send the request to wrapped.DB
+            await wrappedDB.createNewEvent(titleInput.value, descriptionInput.value, new Date(startInput.value), new Date(endInput.value), locationInput.value, eventBoardInput.value);
             // becuase of its nature, the middle board refresh is handled by boardList.js.
-            
-            // now that everything is done we can reset the boxes to blank.
-            titleInput.innerHTML, locationInput.innerHTML, startInput.innerHTML, endInput.innerHTML, descriptionInput.innerHTML, eventBoardInput.innerHTML = "";
 
-            // inform the user the board was successfully created
-            messageBoxElement.innerHTML = "Board successfully created!";
+            // now that everything is done we can reset the boxes to blank.
+            titleInput.innerHTML, locationInput.innerHTML, startInput.innerHTML, endInput.innerHTML, descriptionInput.innerHTML;
+
+            // inform the user the event was successfully created
+            messageBoxElement.innerHTML = "Event successfully created!";
 
             // hide the message after 5 seconds
             setTimeout(function() {
