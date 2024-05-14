@@ -90,7 +90,7 @@ const Database = async () => {
      * 
      * Returns an event given its ID number
      *
-     * @author: Benjamin Wong
+     * @author: Sandro Ansari
      * @param { Integer } ID, the ID number of the requested board.
      * @return { Promise } That resolves to the event and its data if it is found, or an error informing otherwise.
      */
@@ -108,7 +108,7 @@ const Database = async () => {
      * 
      * Returns an board given its ID number.
      *
-     * @author: Benjamin Wong
+     * @author: Sandro Ansari
      * @param { Integer } ID, the ID number of the requested board.
      * @return { Promise } That resolves to the board and its data if it is found, or an error informing otherwise.
      */
@@ -126,7 +126,7 @@ const Database = async () => {
      * 
      * Returns a user given their ID number.
      *
-     * @author: Benjamin Wong
+     * @author: Sandro Ansari
      * @param { Integer } ID, the ID number of the requested board.
      * @return { Promise } That resolves to the user and its data if it is found, or an error informing otherwise.
      */
@@ -143,7 +143,7 @@ const Database = async () => {
      * 
      * Given the requisite info, creates a new event and adds it to the database
      *
-     * @author: Benjamin Wong
+     * @author: Sandro Ansari
      * @param { Event } event, an event class with correct details.
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
@@ -179,7 +179,7 @@ const Database = async () => {
      * 
      * Given the requisite info, creates a new board and adds it to the database
      *
-     * @author: Benjamin Wong
+     * @author: Sandro Ansari
      * @param { Board } board, an event class with correct details.
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
@@ -208,7 +208,7 @@ const Database = async () => {
      * 
      * Given the requisite info, creates a new board and adds it to the database
      *
-     * @author: Benjamin Wong
+     * @author: Sandro Ansari
      * @param { User } user, an event class with correct details.
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
@@ -236,7 +236,7 @@ const Database = async () => {
      * 
      * Given the requisite info, deletes an event with the specified ID from the database.
      *
-     * @author: Benjamin Wong
+     * @author: Sandro Ansari
      * @param { Integer } ID, the ID of the event to be deleted.
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
@@ -256,7 +256,7 @@ const Database = async () => {
      * 
      * Given the requisite info, adds an event to a user's list of events to attend.
      *
-     * @author: Benjamin Wong
+     * @author: Sandro Ansari
      * @param { Integer } eventID, the ID of the event to attend
      * @param { Integer } userID, the user to attend this event
      * @return { Promise } That resolves an indication of success or error otherwise.
@@ -284,7 +284,7 @@ const Database = async () => {
      * 
      * Given the requisite info, adds an board to a user's list of followed boards.
      *
-     * @author: Benjamin Wong
+     * @author: Sandro Ansari
      * @param { Integer } boardID , the ID of the event to follow
      * @param { Integer } userID, the user to follow this board
      * @return { Promise } That resolves an indication of success or error otherwise.
@@ -312,7 +312,7 @@ const Database = async () => {
      * 
      * Given the requisite info, removes an event to a user's list of events to attend.
      *
-     * @author: Benjamin Wong
+     * @author: Sandro Ansari
      * @param { Integer } eventID, the ID of the event to stop attending
      * @param { Integer } userID, the user to unattend this event
      * @return { Promise } That resolves an indication of success or error otherwise.
@@ -340,7 +340,7 @@ const Database = async () => {
      * 
      * Given the requisite info, removes a board to a user's list of followed boards.
      *
-     * @author: Benjamin Wong
+     * @author: Sandro Ansari
      * @param { Integer } boardID , the ID of the event to unfollow
      * @param { Integer } userID, the user to unfollow this board
      * @return { Promise } That resolves an indication of success or error otherwise.
@@ -367,7 +367,7 @@ const Database = async () => {
      * 
      * Given a board's ID, deletes it from the DB if there is noone in attendance.
      *
-     * @author: Benjamin Wong
+     * @author: Sandro Ansari
      * @param { Integer } eventID, the ID of the event to delete
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
