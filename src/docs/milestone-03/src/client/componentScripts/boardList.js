@@ -4,8 +4,7 @@ import { renderFeedGrid } from "./gridRenderer.js";
 // Function to render the list of boards
 export async function renderBoardList(boardListElement, inBoardView) {
     boardListElement.innerHTML = "";
-    const userId = (await wrappedDB.getCurrentUser())._id;
-    const boards = (await  wrappedDB.getUserBoards(userId));
+    const boards = (await  wrappedDB.getUserBoards());
     const boardList = document.getElementById("leftDisplayBox");
     const middleDisplayBoxElement = document.getElementById("middleDisplayBox");
     let buttonList = []
@@ -52,7 +51,7 @@ function createRemoveBox(board, boardListElement){
     newButton.classList.add("remove-button");
     newButton.innerText = "Remove";
     newButton.addEventListener("click", (e) =>{
-        wrappedDB.unsubscribeUserFromBoard(wrappedDB.getCurrentUser()._id, board._id)
+        wrappedDB.unsubscribeUserFromBoard(board._id)
         renderBoardList(boardListElement, true)
     })  
     return newButton;

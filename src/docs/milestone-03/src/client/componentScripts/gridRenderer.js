@@ -40,9 +40,9 @@ export async function renderBoardGrid(element, filterName) {
     element.innerHTML = "";
     let boards;
     try{
-        boards = await wrappedDB.boards.boards;
+        boards = await wrappedDB.getAllBoards();
     }
-    catch{
+    catch (e) {
         console.log("Something went wrong in renderBoardGrid:", e)
         createMissing(document.getElementById("leftDisplayBox"), [], "events")
         return
@@ -147,7 +147,7 @@ function createBoardDiv(board) {
     newButton.addEventListener("click", async (e) => {
         try{
             const user = await wrappedDB.getCurrentUser()
-            await wrappedDB.subscribeUserToBoard(user._id, board._id)
+            await wrappedDB.subscribeUserToBoard(board._id)
             await renderBoardList(document.getElementById("leftDisplayBox"), true)
         }
         catch(e){

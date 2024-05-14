@@ -18,12 +18,12 @@ renderHeaderBar(headerBarElement);
 
 // FOR DEBUGGING BEFORE ADDING TRANSITION BUTTONS:
 
-window.changeView = (view, logging=true) => {
+async function changeView(view, logging=true) {
     [leftDisplayBoxElement, middleDisplayBoxElement, rightDisplayBoxElement].forEach(x=>x.innerHTML="");
     switch (view) {
         case 1: // FEED VIEW
             if (logging) console.log("Rendering Feed View.");
-            renderEventCreate(rightDisplayBoxElement)
+            await renderEventCreate(rightDisplayBoxElement)
             renderFeedGrid(middleDisplayBoxElement, "").then(e =>{
                 renderBoardList(leftDisplayBoxElement, false);
             });
@@ -31,24 +31,23 @@ window.changeView = (view, logging=true) => {
             break;
         case 2: // MAP VIEW
             if (logging) console.log("Rendering Map View.");
-            renderEventCreate(rightDisplayBoxElement);
-            renderBoardList(leftDisplayBoxElement);
-            renderMap(middleDisplayBoxElement);
+            await renderEventCreate(rightDisplayBoxElement);
+            await renderBoardList(leftDisplayBoxElement);
+            await renderMap(middleDisplayBoxElement);
             break;
         case 3: //BOARD VIEW
             if (logging) console.log("Rendering Board View.");
-            renderBoardGrid(middleDisplayBoxElement);
-        console.log("Rendering Board View.");
-            renderBoardGrid(middleDisplayBoxElement, "");
-            renderBoardCreate(rightDisplayBoxElement);
-            renderBoardList(leftDisplayBoxElement, true);
+            await renderBoardGrid(middleDisplayBoxElement, "");
+            await renderBoardCreate(rightDisplayBoxElement);
+            await renderBoardList(leftDisplayBoxElement, true);
             break;
         case 4: //SETTINGS VIEW
             if (logging) console.log("Rendering Settings View.");
             //REPLACE WITH RENDER CALLS
-            renderSettings(middleDisplayBoxElement);
+            await renderSettings(middleDisplayBoxElement);
             break;
     }
+    console.log(`Finished rendering view ${view}`);
     return true;
 }
 
@@ -64,5 +63,3 @@ document.getElementById("boardsBtn").onclick = () => {
 document.getElementById("settingsBtn").onclick = () => {
     changeView(4, false);
 }
-
-changeView(2,false);

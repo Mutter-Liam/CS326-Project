@@ -32,9 +32,10 @@
     "test": "",
     "milestone-01": "http-server src/docs/milestone-01 -p 3000 -c-1 -o -s",
     "milestone-02": "http-server src/docs/milestone-02/src/client -p 3000 -c-1 -o -s",
-    "milestone-03": "http-server src/docs/milestone-03/src/client -p 3000 -c-1 -o -s",
+    "milestone-03": "node src/docs/milestone-03/src/server/index.js",
     "validate-html": "html-validate src/**/*.html",
-    "prettier": "prettier src —write"
+    "prettier": "prettier src —write",
+    "clean-database": "cleanDB.bat"
   },
   "dependencies": {
     "archiver": "^6.0.1",

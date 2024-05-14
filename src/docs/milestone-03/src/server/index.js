@@ -1,40 +1,149 @@
+const ERROR = "error";
+const OK = "ok";
+
 // import our database.
 import Database from "./database.js";
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // express.js docs here: https://expressjs.com/
 // Hopefully baseline code to use express.js for our server.
-const express = require('express');
+import express from 'express';
 const app = express();
+app.use(express.json());
 const PORT = 3260;
+const db = await Database();
 
-// TODO Well, all of the funcionality.
+app.use(express.static(path.resolve(__dirname, '../client')))
 
-// TODO GET Route => returns something
-// retrieve event information, possibly specifying some or just all of them depending on how our frontend works.
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.get('/get-user', async (req, res) => {
+    const result = await db.getUserByID({key:req.query.id.toString()});
+    if (result.data.length === 0) {
+        res.json({status:ERROR, error:`No user with id: ${req.query.id}`});
+    } else {
+        result.data = result.data[0];
+        res.json(result);
+    }
+});
+app.get('/get-user-boards', async (req, res) => {
+    const user = await db.getUserByID({key:req.query.id.toString()});
+    if (user.status !== "ok") res.json(user);
+    else {
+        const boardList = user.data.eventsAttending;
+        const result = await db.getBoardByID({keys:boardList});
+        res.json(result);
+    }
+});
+app.get('/get-user-events', async (req, res) => {
+    const user = await db.getUserByID({key:req.query.id.toString()});
+    if (user.status !== "ok") res.json(user);
+    else {
+        const eventList = user.data.eventsAttending;
+        const result = await db.getEventByID({keys:eventList});
+        res.json(result);
+    }
 });
 
-// TODO POST Route => creates something
-// post an event, given all correct information (front end should ensure this, theoretically.)
-app.post('/', (req, res) => {
-    res.send('Got a POST request!');
+app.get('/get-board', async (req, res) => {
+    const result = await db.getBoardByID({key:req.query.id.toString()});
+    if (result.data.length === 0) {
+        res.json({status:ERROR, error:`No board with id: ${req.query.id}`});
+    } else {
+        result.data = result.data[0];
+        res.json(result);
+    }
+});
+app.get('/get-board-users', async (req, res) => {
+    const board = await db.getBoardByID({key:req.query.id.toString()});
+    if (board.status !== "ok") res.json(board);
+    else {
+        const userList = board.data.subscribedUsers;
+        const result = await db.getUserByID({keys:userList});
+        res.json(result);
+    }
+});
+app.get('/get-board-events', async (req, res) => {
+    const board = await db.getBoardByID({key:req.query.id.toString()});
+    if (board.status !== "ok") res.json(board);
+    else {
+        const eventList = board.data.events;
+        const result = await db.getEventByID({keys:eventList});
+        res.json(result);
+    }
+});
+app.get('/get-board-list', async (req, res) => {
+    const result = await db.getBoardByID(JSON.parse(req.query.options));
+    res.json(result);
 });
 
-// TODO PUT Route => updates... something
-// Could do event detail updating, though this wasn't originally planned in scope and would require more front 
-// end tweaking.
-// Could keep it simple with just username changing?
-app.put('/user', (req, res) => {
-    res.send('Got a PUT request at /user');
+app.get('/get-event', async (req, res) => {
+    const result = await db.getEventByID({key:req.query.id.toString()});
+    if (result.data.length === 0) {
+        res.json({status:ERROR, error:`No event with id: ${req.query.id}`});
+    } else {
+        result.data = result.data[0];
+        res.json(result);
+    }
+});
+app.get('/get-event-attendees', async (req, res) => {
+    const event = await db.getEventByID({key:req.query.id.toString()});
+    if (event.status !== "ok") res.json(event);
+    else {
+        const userList = event.data.attendees;
+        const result = await db.getUserByID({keys:userList});
+        res.json(result);
+    }
+});
+app.get('/get-event-board', async (req, res) => {
+    const event = await db.getEventByID(req.query.id.toString());
+    if (event.status !== "ok") res.json(event);
+    else {
+        const result = await getBoardByID({key:event.data.board});
+        res.json(result);
+    }
 });
 
-// TODO DELETE Route  => deletes... something
-// In original theoretical planning, we had the server automatically delete expired posts, but that *could* be difficult.
-// Account settings could be updated to delete posts you've made?
-// Delete account? 
-app.delete('/user', (req, res) => {
-    res.send('Got a DELETE request at /user');
+app.post('/create-new-event', async (req, res) => {
+    const result = await db.createEvent(req.body);
+    res.json(result);
+});
+app.post('/create-new-user', async (req, res) => {
+    const result = await db.createUser(req.body);
+    res.json(result);
+});
+app.post('/create-new-board', async (req, res) => {
+    const result = await db.createBoard(req.body);
+    res.json(result);
+});
+
+app.put('/subscribe-to-board', async (req, res) => {
+    const result = await db.followBoard(req.body.board.toString(), req.body.user.toString());
+    res.json(result);
+});
+app.put('/unsubscribe-to-board', async (req, res) => {
+    const result = await db.unfollowBoard(req.body.board.toString(), req.body.user.toString());
+    res.json(result);
+});
+
+app.put('/attend-event', async (req, res) => {
+    const result = await db.followBoard(req.body.event.toString(), req.body.user.toString());
+    res.json(result);
+});
+app.put('/unattend-event', async (req, res) => {
+    const result = await db.unfollowBoard(req.body.event.toString(), req.body.user.toString());
+    res.json(result);
+});
+
+app.delete('/delete-event', async (req, res) => {
+    const result = await db.deleteEvent(req.body.id.toString());
+    res.json(result);
+});
+app.delete('/delete-board', async (req, res) => {
+    const result = await db.deleteBoard(req.body.id.toString());
+    res.json(result);
 });
 
 // Start the server!

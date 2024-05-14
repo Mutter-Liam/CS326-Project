@@ -110,7 +110,7 @@ function initForm(element) {
             const userID = wrappedDB.getCurrentUser()._id;
 
             // wrappedDB.createNewEvent(userID, titleInput.value, descriptionInput.value, startInput, endInput, locationInput.value, eventBoardInput);
-            wrappedDB.createNewEvent(userID, titleInput.value, descriptionInput.value, new Date(startInput.value), new Date(endInput.value), locationInput.value, boardID);
+            wrappedDB.createNewEvent(titleInput.value, descriptionInput.value, new Date(startInput.value), new Date(endInput.value), locationInput.value, boardID);
             // becuase of its nature, the middle board refresh is handled by boardList.js.
             
             // now that everything is done we can reset the boxes to blank.

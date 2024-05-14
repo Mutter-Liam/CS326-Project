@@ -21,32 +21,23 @@ const ERROR = "error"
 const initDB = async () => {
   // Initialize the database if it doesn't exist
   const events = new PouchDB(EVENTS);
-  await events.close();
+  events.close();
   const users = new PouchDB(USERS);
-  await users.close();
+  users.close();
   const boards = new PouchDB(BOARDS);
-  await boards.close();
+  boards.close();
+  const idMax = new PouchDB("ids");
+  idMax.close();
 };
 
-const tryOp = (f) => {
+const tryOp = async (f) => {
   try {
-    const result = f();
+    const result = await f();
     return {status: OK, data: result};
   } catch (e) {
+    console.log(`Error:${e}\n`);
     return {status: ERROR, error:e};
   }
-}
-
-let nextIDs = {
-  [EVENTS]: 0,
-  [USERS]: 0,
-  [BOARDS]: 0
-}
-
-const nextId = (collection) => {
-  const newID = nextIDs[collection];
-  nextIDs[collection] += 1;
-  return newID;
 }
 
 /**
@@ -71,6 +62,19 @@ const Database = async () => {
    */
   const getCollection = (collection) => new PouchDB(collection);
 
+  const next = async (collection) => {
+    const nextIDs = getCollection("ids");
+    let newID = {_id:collection, next: 0};
+    try {
+      newID = await nextIDs.get(collection);
+    } catch (e) {}
+    const result = newID.next;
+    newID.next += 1;
+    await nextIDs.put(newID);
+    nextIDs.close();
+    return result.toString();
+  }
+
   const obj = {
 
     /**
@@ -82,9 +86,10 @@ const Database = async () => {
      * @param { Integer } ID, the ID number of the requested board.
      * @return { Promise } That resolves to the event and its data if it is found, or an error informing otherwise.
      */
-    getEventByID: (ID) => {
+    getEventByID: async (options={}) => {
+      options.include_docs = true;
       const eventsCollection = getCollection(EVENTS);
-      const result = tryOp(()=>eventsCollection.get(ID));
+      const result = await tryOp(async ()=> (await eventsCollection.allDocs(options)).rows.map(x=>x.doc));
       eventsCollection.close();
       return result;
     },
@@ -99,9 +104,10 @@ const Database = async () => {
      * @param { Integer } ID, the ID number of the requested board.
      * @return { Promise } That resolves to the board and its data if it is found, or an error informing otherwise.
      */
-    getBoardByID: (ID) => {
+    getBoardByID: async (options={}) => {
+      options.include_docs = true;
       const boardsCollection = getCollection(BOARDS);
-      const result = tryOp(()=>boardsCollection.get(ID));
+      const result = await tryOp(async ()=> (await boardsCollection.allDocs(options)).rows.map(x=>x.doc));
       boardsCollection.close();
       return result;
     },
@@ -116,56 +122,10 @@ const Database = async () => {
      * @param { Integer } ID, the ID number of the requested board.
      * @return { Promise } That resolves to the user and its data if it is found, or an error informing otherwise.
      */
-    getUserByID: (ID) => {
+    getUserByID: async (options={}) => {
+      options.include_docs = true;
       const usersCollection = getCollection(USERS);
-      const result = tryOp(()=>usersCollection.get(ID));
-      usersCollection.close();
-      return result;
-    },
-    
-    /**
-     * getAllEvents
-     * 
-     * Returns all events upon request.
-     *
-     * @author: Benjamin Wong
-     * @return { Promise } That resolves to a list of all events, or an error informing otherwise.
-     */
-    getAllEvents: (options) => {
-      const eventsCollection = getCollection(EVENTS);
-      const result = tryOp(()=>eventsCollection.allDocs(options));
-      eventsCollection.close();
-      return result;
-    },
-
-
-    /**
-     * getAllBoards
-     * 
-     * Returns all boards upon request.
-     *
-     * @author: Benjamin Wong
-     * @return { Promise } That resolves to a list of all boards, or an error informing otherwise.
-     */
-    getAllBoards: (options) => {
-      const boardsCollection = getCollection(BOARDS);
-      const result = tryOp(()=>boardsCollection.allDocs(options));
-      boardsCollection.close();
-      return result;
-    },
-
-
-    /**
-     * getAllUsers
-     * 
-     * Returns all users upon request.
-     *
-     * @author: Benjamin Wong
-     * @return { Promise } That resolves to a list of all users, or an error informing otherwise.
-     */
-    getAllUsers: (options) => {
-      const usersCollection = getCollection(USERS);
-      const result = tryOp(()=>usersCollection.allDocs(options));
+      const result = await tryOp(async ()=> (await usersCollection.allDocs(options)).rows.map(x=>x.doc));
       usersCollection.close();
       return result;
     },
@@ -179,25 +139,30 @@ const Database = async () => {
      * @param { Event } event, an event class with correct details.
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
-    createEvent: (event) => {
-      const eventsCollection = getCollection(EVENTS);
-      const result = tryOp(()=>{
-        const newID = nextId(EVENTS);
+    createEvent: async (event) => {
+      const result = await tryOp(async ()=>{
+        const eventsCollection = getCollection(EVENTS);
+        const boardsCollection = getCollection(BOARDS);
+        const newID = await next(EVENTS);
         const doc = {
           _id: newID,
-          author: event.author,
           title: event.title,
           description: event.description,
           startTime: event.startTime,
           endTime: event.endTime,
           location: event.location,
-          board: event.board,
+          board: event.board.toString(),
           attendees: []
         }
-        eventsCollection.put(doc);
+        await eventsCollection.put(doc);
+        let board = await boardsCollection.get(doc.board);
+        board.events.push(newID);
+        await boardsCollection.put(board);
+        await eventsCollection.close();
+        await boardsCollection.close();
+        await obj.attendEvent(newID, event.author.toString());
         return newID;
       });
-      eventsCollection.close();
       return result;
     },
 
@@ -210,10 +175,10 @@ const Database = async () => {
      * @param { Board } board, an event class with correct details.
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
-    createBoard: (board) => {
-      const boardsCollection = getCollection(BOARDS);
-      const result = tryOp(()=>{
-        const newID = nextId(BOARDS);
+    createBoard: async (board) => {
+      const result = await tryOp(async ()=>{
+        const boardsCollection = getCollection(BOARDS);
+        const newID = await next(BOARDS);
         const doc = {
           _id: newID,
           name: board.name,
@@ -222,10 +187,11 @@ const Database = async () => {
           subscribedUsers: [],
           events: []
         }
-        boardsCollection.put(doc);
+        await boardsCollection.put(doc);
+        await boardsCollection.close();
+        await obj.followBoard(newID, board.author.toString());
         return newID;
       });
-      boardsCollection.close();
       return result;
     },
 
@@ -238,20 +204,19 @@ const Database = async () => {
      * @param { User } user, an event class with correct details.
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
-    createUser: (user) => {
+    createUser: async (user) => {
       const usersCollection = getCollection(USERS);
-      const result = tryOp(()=>{
-        const newID = nextId(USERS);
+      const result = await tryOp(async ()=>{
+        const newID = await next(USERS);
         const doc = {
           _id: newID,
           username: user.name,
           email: user.email,
           karma: 0,
           subscribedBoards : [],
-          eventsCreated: [],
           eventsAttending: []
         }
-        usersCollection.put(doc);
+        await usersCollection.put(doc);
         return newID;
       });
       usersCollection.close();
@@ -269,9 +234,9 @@ const Database = async () => {
      */
     deleteEvent: async (ID) => {
       const eventsCollection = getCollection(EVENTS);
-      const result = tryOp(async ()=>{
+      const result = await tryOp(async ()=>{
         doc = await eventsCollection.get(ID);
-        eventsCollection.remove(doc);
+        await eventsCollection.remove(doc);
       });
       eventsCollection.close();
       return result;
@@ -291,11 +256,13 @@ const Database = async () => {
     attendEvent: async (eventID, userID) => {
       const eventsCollection = getCollection(EVENTS);
       const usersCollection = getCollection(USERS);
-      const result = tryOp(async ()=>{
-        const event = await eventsCollection.get(eventID);
-        const user = await usersCollection.get(userID);
+      const result = await tryOp(async ()=>{
+        let event = await eventsCollection.get(eventID);
+        let user = await usersCollection.get(userID);
         event.attendees.push(userID);
         user.eventsAttending.push(eventID);
+        await eventsCollection.put(event);
+        await usersCollection.put(user);
         return 'Success';
       });
       eventsCollection.close();
@@ -314,14 +281,16 @@ const Database = async () => {
      * @param { Integer } userID, the user to follow this board
      * @return { Promise } That resolves an indication of success or error otherwise.
      */
-    addBoard: async (boardID, userID) => {
+    followBoard: async (boardID, userID) => {
       const boardsCollection = getCollection(BOARDS);
       const usersCollection = getCollection(USERS);
-      const result = tryOp(async ()=>{
-        const board = await boardsCollection.get(boardID);
-        const user = await usersCollection.get(userID);
+      const result = await tryOp(async ()=>{
+        let board = await boardsCollection.get(boardID);
+        let user = await usersCollection.get(userID);
         board.subscribedUsers.push(userID);
         user.subscribedBoards.push(boardID);
+        await boardsCollection.put(board);
+        await usersCollection.put(user);
         return 'Success';
       });
       boardsCollection.close();
