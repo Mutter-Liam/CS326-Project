@@ -1,5 +1,4 @@
 import { wrappedDB } from "../dataWrap.js";
-import { renderBoardList } from "./boardList.js";
 import { renderEventDetails } from "./eventDetailRenderer.js";
 import { matchStrings, renderSearchBar } from "./searchBar.js";
 
@@ -8,17 +7,8 @@ let columns = [];
 // Function to render the feed grid
 export async function renderFeedGrid(element, filterName, boardFilterFunc=()=>true) {
     element.innerHTML = ""
-    let subscribedBoards;
-    let subscribedEvents;
-    try{
-        subscribedBoards = (await wrappedDB.getCurrentUser()).subscribedBoards.filter(boardFilterFunc);
-        subscribedEvents = (await Promise.all(subscribedBoards.map(async (boardID)=> await wrappedDB.getBoardEvents(boardID)))).flat();
-    }
-    catch(e){
-        console.log("Something went wrong in renderFeedGrid:", e);
-        createMissing(document.getElementById("middleDisplayBox"), [], "event");
-        return;
-    }
+    let subscribedBoards = (await wrappedDB.getUserBoards()).filter(boardFilterFunc);
+    let subscribedEvents = (await Promise.all(subscribedBoards.map(async b => await wrappedDB.getBoardEvents(b)))).flat();
     const gridDiv = createSearchBar(element, false);
     const middleDisplayBoxElement = document.getElementById("middleDisplayBox")
     const searchInput = document.getElementById("eventSearchNameInput")
@@ -35,8 +25,11 @@ export async function renderFeedGrid(element, filterName, boardFilterFunc=()=>tr
     createGrid(gridDiv, subscribedEvents, "event");
 }
 
+let boardListUpdater;
+
 // Function to render the board grid
-export async function renderBoardGrid(element, filterName) {
+export async function renderBoardGrid(element, filterName, rerenderBoardList) {
+    boardListUpdater = rerenderBoardList;
     element.innerHTML = "";
     let boards;
     try{
@@ -146,12 +139,15 @@ function createBoardDiv(board) {
     newBoard.appendChild(newButton)
     newButton.addEventListener("click", async (e) => {
         try{
-            const user = await wrappedDB.getCurrentUser()
-            await wrappedDB.subscribeUserToBoard(board._id)
-            await renderBoardList(document.getElementById("leftDisplayBox"), true)
+            console.log("A");
+            await wrappedDB.subscribeUserToBoard(board._id);
+            console.log("B");
+            await boardListUpdater();
+            console.log("C");
         }
         catch(e){
-            alert("Error posting!")
+            alert("Failed to Subscribe!")
+            console.log(e);
         }
     })
     return {

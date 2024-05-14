@@ -8,9 +8,9 @@ export async function renderBoardList(boardListElement, inBoardView) {
     const boardList = document.getElementById("leftDisplayBox");
     const middleDisplayBoxElement = document.getElementById("middleDisplayBox");
     let buttonList = []
-    boards.forEach(board => {
+    await boards.forEach(async board => {
         const listDiv = createListDiv(board);
-        const button = inBoardView ? createRemoveBox(board, boardListElement) : createCheckBox(board, boardListElement);
+        const button = inBoardView ? await createRemoveBox(board, boardListElement) : createCheckBox(board, boardListElement);
         if(!inBoardView) {buttonList.push(button)}
         listDiv.appendChild(button);
         boardList.appendChild(listDiv);
@@ -45,13 +45,13 @@ function createListDiv(board){
 }
 
 // Function to create a remove button for a board
-function createRemoveBox(board, boardListElement){
+async function createRemoveBox(board, boardListElement){
     const newButton = document.createElement("button");
     newButton.type = "button";
     newButton.classList.add("remove-button");
     newButton.innerText = "Remove";
-    newButton.addEventListener("click", (e) =>{
-        wrappedDB.unsubscribeUserFromBoard(board._id)
+    newButton.addEventListener("click", async (e) =>{
+        await wrappedDB.unsubscribeUserFromBoard(board._id);
         renderBoardList(boardListElement, true)
     })  
     return newButton;

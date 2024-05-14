@@ -38,6 +38,14 @@ const tryOp = async (f) => {
     console.log(`Error:${e}\n`);
     return {status: ERROR, error:e};
   }
+};
+
+const removeItemOnce = (arr, value) => {
+  var index = arr.indexOf(value);
+  if (index > -1) {
+    arr.splice(index, 1);
+  }
+  return arr;
 }
 
 /**
@@ -287,14 +295,15 @@ const Database = async () => {
       const result = await tryOp(async ()=>{
         let board = await boardsCollection.get(boardID);
         let user = await usersCollection.get(userID);
+        if (user.subscribedBoards.includes(boardID)) return 'Redundant';
         board.subscribedUsers.push(userID);
         user.subscribedBoards.push(boardID);
         await boardsCollection.put(board);
         await usersCollection.put(user);
         return 'Success';
       });
-      boardsCollection.close();
-      usersCollection.close();
+      await boardsCollection.close();
+      await usersCollection.close();
       return result;
     },
 
@@ -311,11 +320,13 @@ const Database = async () => {
     unattendEvent: async (eventID, userID) => {
       const eventsCollection = getCollection(EVENTS);
       const usersCollection = getCollection(USERS);
-      const result = tryOp(async ()=>{
+      const result = await tryOp(async ()=>{
         const event = await eventsCollection.get(eventID);
         const user = await usersCollection.get(userID);
-        event.attendees.remove(userID);
-        user.eventsAttending.remove(eventID);
+        removeItemOnce(event.attendees, userID);
+        removeItemOnce(user.eventsAttending, boardID);
+        await eventsCollection.put(event);
+        await usersCollection.put(user);
         return 'Success';
       });
       eventsCollection.close();
@@ -337,11 +348,13 @@ const Database = async () => {
     unfollowBoard: async (boardID, userID) => {
       const boardsCollection = getCollection(BOARDS);
       const usersCollection = getCollection(USERS);
-      const result = tryOp(async ()=>{
+      const result = await tryOp(async ()=>{
         const board = await boardsCollection.get(boardID);
         const user = await usersCollection.get(userID);
-        board.subscribedUsers.remove(userID);
-        user.subscribedBoards.remove(boardID);
+        removeItemOnce(board.subscribedUsers, userID);
+        removeItemOnce(user.subscribedBoards, boardID);
+        await boardsCollection.put(board);
+        await usersCollection.put(user);
         return 'Success';
       });
       boardsCollection.close();
