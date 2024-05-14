@@ -1,6 +1,5 @@
 // code for the rightHandDisplayBox of wireframe 3.
 import { wrappedDB } from "../dataWrap.js";
-import { renderBoardGrid } from "./gridRenderer.js";
 
 /**
  * Clears anything from the current element to make way for board creation.
@@ -8,12 +7,12 @@ import { renderBoardGrid } from "./gridRenderer.js";
  * @author: Benjamin Wong
  * @param { HTMLElement } element, the HTML element to render the board creation tab. (usually right hand side.);
  */
-export async function renderBoardCreate(element) {
+export async function renderBoardCreate(element, rerenderBoardGrid) {
     // clear the content of the element. 
     element.innerHTML = "";
 
     // init the form into the element.
-    initForm(element);
+    initForm(element, rerenderBoardGrid);
 }
 
 
@@ -23,7 +22,7 @@ export async function renderBoardCreate(element) {
  * @author: Benjamin Wong
  * @param { HTMLElement } element, the HTML element to render the board creation tab. (usually right hand side.);
  */
-function initForm(element) {
+function initForm(element, rerenderBoardGrid) {
 
     // inject all of our search bars and buttons to the element
     element.innerHTML = `
@@ -99,7 +98,7 @@ function initForm(element) {
             // rerender our boards now that we have a new board we can show. 
             let middleDisplayBoxElement = document.getElementById("middleDisplayBox");
             middleDisplayBoxElement.innerHTML = "";
-            renderBoardGrid(middleDisplayBoxElement, "");
+            rerenderBoardGrid(middleDisplayBoxElement, "");
 
             // inform our user that the board has successfully been created
             messageBoxElement.innerHTML = "Board successfully created!";

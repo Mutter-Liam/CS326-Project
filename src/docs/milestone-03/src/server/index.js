@@ -19,13 +19,15 @@ const db = await Database();
 
 app.use(express.static(path.resolve(__dirname, '../client')))
 
-async function requestCheck(f, params, res, reqMethod) {
+async function requestCheck(f, params, res, reqMethod, suggestedStructure=null) {
     try {await f()}
     catch (e) {
         console.log(`Client requested \`${reqMethod}\` with: ${JSON.stringify(params)} and recieved error:${e}`);
+        let errorMessage = `Bad \`${reqMethod}\` request: ${JSON.stringify(params)}`;
         res.json({
-            status:ERROR,
-            error:`Bad \`${reqMethod}\` request: ${JSON.stringify(params)}`
+            status: ERROR,
+            error: errorMessage,
+            suggestedStructure: suggestedStructure ? `/${reqMethod}/${suggestedStructure}` : null
         });
     }
 }
@@ -39,7 +41,7 @@ app.get('/get-user', async (req, res) => {
             result.data = result.data[0];
             res.json(result);
         }
-    }, req.query, res, "get-user");
+    }, req.query, res, "get-user", "?id=<userID>");
 });
 app.get('/get-user-boards', async (req, res) => {
     await requestCheck(async ()=> {

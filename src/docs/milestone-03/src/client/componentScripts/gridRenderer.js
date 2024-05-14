@@ -139,11 +139,8 @@ function createBoardDiv(board) {
     newBoard.appendChild(newButton)
     newButton.addEventListener("click", async (e) => {
         try{
-            console.log("A");
             await wrappedDB.subscribeUserToBoard(board._id);
-            console.log("B");
             await boardListUpdater();
-            console.log("C");
         }
         catch(e){
             alert("Failed to Subscribe!")

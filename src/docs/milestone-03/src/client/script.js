@@ -16,6 +16,8 @@ const rightDisplayBoxElement = document.getElementById("rightDisplayBox");
 // the one universal render call: the header
 renderHeaderBar(headerBarElement);
 
+const boardGrid = () => renderBoardGrid(middleDisplayBoxElement, "", ()=>renderBoardList(leftDisplayBoxElement, true));
+
 // FOR DEBUGGING BEFORE ADDING TRANSITION BUTTONS:
 
 async function changeView(view, logging=true) {
@@ -24,7 +26,7 @@ async function changeView(view, logging=true) {
     switch (view) {
         case 1: // FEED VIEW
             if (logging) console.log("Rendering Feed View.");
-            await renderEventCreate(rightDisplayBoxElement)
+            await renderEventCreate(rightDisplayBoxElement);
             await renderFeedGrid(middleDisplayBoxElement, "");
             await renderBoardList(leftDisplayBoxElement, false);            
             break;
@@ -33,13 +35,13 @@ async function changeView(view, logging=true) {
             if (logging) console.log("Rendering Map View.");
             await renderEventCreate(rightDisplayBoxElement);
             await renderBoardList(leftDisplayBoxElement);
-            await renderMap(middleDisplayBoxElement);
+            renderMap(middleDisplayBoxElement);
             break;
 
         case 3: //BOARD VIEW
             if (logging) console.log("Rendering Board View.");
-            await renderBoardGrid(middleDisplayBoxElement, "", ()=>renderBoardList(leftDisplayBoxElement, true));
-            await renderBoardCreate(rightDisplayBoxElement);
+            await boardGrid();
+            await renderBoardCreate(rightDisplayBoxElement, boardGrid);
             await renderBoardList(leftDisplayBoxElement, true);
             break;
 
